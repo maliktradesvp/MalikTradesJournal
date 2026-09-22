@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MalikTrades Journal</title>
-<meta name="description" content="A free trading journal for futures traders. Log trades against your levels, grade setups S to C, and watch your P&amp;L calendar and equity curve build. Runs entirely in your browser.">
+<meta name="description" content="A free trading journal for futures traders. Log trades against your levels, rate setups one to four stars, and watch your P&amp;L calendar and equity curve build. Runs entirely in your browser.">
 <meta name="theme-color" content="#1E4C52">
 <link rel="icon" href="https://maliktradesvp.github.io/MalikTradesJournal/banner.jpg">
 
@@ -13,11 +13,11 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MalikTrades">
 <meta property="og:title" content="MalikTrades Journal">
-<meta property="og:description" content="Log your trades, grade your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
+<meta property="og:description" content="Log your trades, rate your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
 <meta property="og:image" content="https://maliktradesvp.github.io/MalikTradesJournal/banner.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MalikTrades Journal">
-<meta name="twitter:description" content="Log your trades, grade your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
+<meta name="twitter:description" content="Log your trades, rate your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
 <meta name="twitter:image" content="https://maliktradesvp.github.io/MalikTradesJournal/banner.jpg">
 <style>
 :root{
@@ -105,9 +105,15 @@ select{appearance:none;padding-right:26px;
   background-position:calc(100% - 14px) 14px,calc(100% - 9px) 14px;
   background-size:5px 5px,5px 5px;background-repeat:no-repeat}
 .filters select{width:auto}
-.scope{display:flex;align-items:center;gap:6px}
+.scope{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .scope input[type=date]{width:auto;padding:5px 8px}
-.scope .btn.sm[aria-pressed=true]{background:var(--cream);color:var(--ground);border-color:var(--cream)}
+.scope select{width:auto;padding:5px 24px 5px 8px;background-position:calc(100% - 12px) 12px,calc(100% - 7px) 12px}
+.scope-seg{width:auto}
+.scope-seg button{padding:6px 14px;white-space:nowrap}
+.scope-ctl{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.scope-ctl[hidden]{display:none}
+.scope-ctl input[type=date]{min-width:0}
+.scope-note{color:var(--muted);font-size:12.5px;margin:-4px 0 14px}
 textarea{resize:vertical;min-height:38px}
 input::placeholder,textarea::placeholder{color:rgba(247,239,220,0.32)}
 
@@ -139,7 +145,7 @@ input::placeholder,textarea::placeholder{color:rgba(247,239,220,0.32)}
 .chip[aria-pressed=true]{background:rgba(126,195,160,0.16);border-color:var(--jade);color:var(--cream)}
 .grade-readout{display:flex;align-items:baseline;gap:8px;color:var(--muted);font-size:13px}
 .grade-badge{
-  font-family:var(--serif);font-size:19px;color:var(--cream);
+  font-family:var(--sans);font-size:15px;letter-spacing:1px;color:#E7C77B;
   border:1px solid var(--line);border-radius:3px;min-width:32px;text-align:center;padding:1px 6px;
 }
 .form-actions{display:flex;gap:10px;align-items:center;margin-top:16px}
@@ -188,14 +194,15 @@ table.log td{padding:11px 10px;border-bottom:1px solid rgba(247,239,220,0.07);ve
 table.log tr:hover td{background:rgba(247,239,220,0.035)}
 td.right,th.right{text-align:right}
 .tag{color:var(--muted);font-size:12px}
-.gradepill{font-family:var(--serif);font-size:15px}
+.gradepill{font-size:13px;letter-spacing:1px;color:#E7C77B;white-space:nowrap}
+.grade-badge .stars,.gradepill .stars{color:#E7C77B}
 .rowbtns{display:flex;gap:2px;justify-content:flex-end;opacity:.45}
 tr:hover .rowbtns{opacity:1}
 .note{color:var(--muted);font-size:12.5px;max-width:340px}
 .empty-state{padding:34px 4px;color:var(--muted)}
 
 /* ---------- grade table ---------- */
-.grades{width:100%;border-collapse:collapse}
+.grades{width:100%;border-collapse:collapse;min-width:440px}
 .grades th{text-align:left;font-weight:400;color:var(--muted);font-size:12.5px;padding:0 8px 8px;border-bottom:1px solid var(--line)}
 .grades td{padding:9px 8px;border-bottom:1px solid rgba(247,239,220,0.07)}
 .bar-track{height:5px;background:rgba(247,239,220,0.1);border-radius:3px;overflow:hidden;min-width:60px}
@@ -212,6 +219,93 @@ footer{
 footer p{color:var(--muted);font-size:13px;max-width:70ch;margin:0 0 8px;line-height:1.55}
 footer p:last-child{margin-bottom:0;opacity:.8}
 @media (max-width:900px){ footer{padding:24px 16px 48px} }
+.shotzone{
+  border:1px dashed var(--line);border-radius:4px;padding:12px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.shotzone.drag{border-color:var(--jade);background:rgba(126,195,160,.07)}
+.shot-strip{display:flex;flex-wrap:wrap;gap:8px}
+.shot-strip:empty{display:none}
+.shot{position:relative;width:104px;height:70px;border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.shot .rm{
+  position:absolute;top:2px;right:2px;width:20px;height:20px;line-height:18px;
+  border-radius:50%;border:0;background:rgba(12,38,42,.82);color:var(--cream);
+  cursor:pointer;font-size:14px;padding:0;
+}
+.shot .rm:hover{background:var(--clay)}
+.shot-add{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.log-shots{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.log-shots img{
+  width:56px;height:38px;object-fit:cover;border-radius:3px;
+  border:1px solid var(--line);cursor:zoom-in;display:block;
+}
+.lightbox{
+  position:fixed;inset:0;background:rgba(9,28,31,.93);z-index:50;
+  display:flex;align-items:center;justify-content:center;padding:28px;
+}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:100%;border-radius:4px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.lb-close{
+  position:absolute;top:16px;right:20px;background:transparent;border:0;
+  color:var(--cream);font-size:30px;line-height:1;cursor:pointer;padding:6px 12px;
+}
+#printReport{display:none}
+@media print{
+  @page{ margin:0; }
+  /* force the palette through — browsers drop backgrounds otherwise */
+  html,body{
+    background:#1E4C52 !important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  #printReport,#printReport *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body > *{display:none !important}
+  #printReport{display:block !important;font-family:var(--sans);color:var(--cream);padding:13mm 11mm 15mm}
+
+  .pr-banner{width:100%;height:116px;overflow:hidden;border-radius:3px;margin-bottom:16px;line-height:0}
+  .pr-banner img{width:100%;height:116px;object-fit:cover;object-position:center 45%;display:block}
+
+  .pr-head{display:flex;align-items:flex-end;gap:14px;border-bottom:1px solid rgba(247,239,220,.28);padding-bottom:9px;margin-bottom:16px}
+  .pr-head h1{font-family:var(--serif);font-size:23px;font-weight:400;margin:0;color:var(--cream)}
+  .pr-head .pr-scope{font-size:11.5px;color:rgba(247,239,220,.62);margin-left:auto;text-align:right;line-height:1.5}
+
+  .pr-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(247,239,220,.16);border:1px solid rgba(247,239,220,.16);border-radius:3px;overflow:hidden;margin-bottom:18px}
+  .pr-stat{padding:9px 11px;background:#1E4C52}
+  .pr-stat .l{font-size:10px;color:rgba(247,239,220,.6);margin-bottom:3px}
+  .pr-stat .v{font-family:var(--serif);font-size:19px;color:var(--cream)}
+  .pr-stat .s{font-size:9.5px;color:rgba(247,239,220,.52);margin-top:3px;line-height:1.35}
+
+  .pr-sec{margin:14px 0 9px;font-family:var(--serif);font-size:16px;font-weight:400;color:var(--cream);break-after:avoid;page-break-after:avoid}
+  .pr-sec:first-of-type{margin-top:0}
+  table.pr thead{display:table-header-group}
+  .pr-curve{margin-bottom:18px}
+
+  table.pr{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:16px}
+  table.pr th{
+    text-align:left;font-weight:400;color:rgba(247,239,220,.6);
+    border-bottom:1px solid rgba(247,239,220,.28);padding:4px 6px;font-size:10px;
+  }
+  table.pr td{padding:5px 6px;border-bottom:1px solid rgba(247,239,220,.1);vertical-align:top;color:var(--cream)}
+  table.pr tr{break-inside:avoid;page-break-inside:avoid}
+  table.pr .r{text-align:right;font-variant-numeric:tabular-nums}
+
+  .pr-pos{color:#7EC3A0}
+  .pr-neg{color:#CF7361}
+  table.pr td.pr-pos, .pr-stat .v.pr-pos{color:#7EC3A0}
+  table.pr td.pr-neg, .pr-stat .v.pr-neg{color:#CF7361}
+
+  .pr-conf{color:rgba(247,239,220,.55);font-size:9.5px;margin-top:2px}
+  .pr-note{color:rgba(247,239,220,.62);font-size:9.5px;max-width:260px;margin-top:2px}
+  .pr-stars{color:#E7C77B;letter-spacing:1px}
+  .pr-shots{display:flex;gap:3px;margin-top:4px}
+  .pr-shots img{width:64px;height:42px;object-fit:cover;border:1px solid rgba(247,239,220,.22);border-radius:2px}
+
+  .pr-foot{
+    margin-top:14px;padding-top:9px;border-top:1px solid rgba(247,239,220,.18);
+    font-size:9px;color:rgba(247,239,220,.5);line-height:1.6;
+  }
+  .pr-break{break-before:page;page-break-before:always;padding-top:13mm}
+}
 .toast{
   position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
   background:var(--cream);color:var(--ground);padding:9px 16px;border-radius:3px;
@@ -234,6 +328,11 @@ footer p:last-child{margin-bottom:0;opacity:.8}
   .day{min-height:62px;padding:5px}
   .day .dpnl{font-size:14px}
   .day .dn{display:none}
+  .scope{width:100%}
+  .scope-seg{width:100%}
+  .scope-ctl{width:100%}
+  .scope-ctl input[type=date]{flex:1}
+  .scope select{flex:1;width:auto}
   .wd-long{display:none}
   .wd-short{display:inline}
   .cal th{padding-left:2px}
@@ -252,6 +351,7 @@ footer p:last-child{margin-bottom:0;opacity:.8}
   <span class="spacer"></span>
   <span class="today" id="todayLine"></span>
   <button class="btn sm" id="btnExport">Export backup</button>
+  <button class="btn sm" id="btnPdf" title="Exports the date window set below">Export PDF</button>
   <button class="btn sm" id="btnCsv">Export CSV</button>
   <button class="btn sm" id="btnImport">Restore backup</button>
   <input type="file" id="fileImport" accept="application/json" hidden>
@@ -264,7 +364,7 @@ footer p:last-child{margin-bottom:0;opacity:.8}
     <div class="panel welcome">
       <h3>A trading journal you can keep</h3>
       <p>Log a trade below and everything here fills in: a P&amp;L calendar, an equity curve, and the stats that tell you whether your edge is real. Nothing to set up, no account, free.</p>
-      <p>Tick the levels your entry was at and the setup grades itself — four or more confluences is an S, three an A, two a B, one a C. After a few dozen trades the grade table shows you whether your own A setups actually beat your C setups. That one table is the point of the whole thing.</p>
+      <p>Tick the levels your entry was at and the setup rates itself — one star per confluence, up to four. After a few dozen trades the ratings table shows you whether your own four-star setups actually beat your one-star setups. That one table is the point of the whole thing.</p>
       <p>Your trades are saved in this browser, on this device. They are never uploaded anywhere and nobody else can see them. Clearing your browsing data erases them, so hit <strong>Export backup</strong> now and then and keep the file somewhere safe.</p>
     </div>
   </section>
@@ -275,12 +375,33 @@ footer p:last-child{margin-bottom:0;opacity:.8}
       <h2 id="scopeTitle">All time</h2>
       <span class="spacer"></span>
       <div class="scope">
-        <button class="btn sm" id="scopeAll" aria-pressed="true">All time</button>
-        <button class="btn ghost" id="dayPrev" aria-label="Previous trading day">‹</button>
-        <input type="date" id="scopeDate" aria-label="Show a specific day">
-        <button class="btn ghost" id="dayNext" aria-label="Next trading day">›</button>
+        <div class="seg scope-seg">
+          <button type="button" id="scopeAll" aria-pressed="true">All time</button>
+          <button type="button" id="scopeDayBtn" aria-pressed="false">Day</button>
+          <button type="button" id="scopeRangeBtn" aria-pressed="false">Range</button>
+        </div>
+        <span class="scope-ctl" id="dayCtl" hidden>
+          <button class="btn ghost" id="dayPrev" aria-label="Previous trading day">‹</button>
+          <input type="date" id="scopeDate" aria-label="Show a specific day">
+          <button class="btn ghost" id="dayNext" aria-label="Next trading day">›</button>
+        </span>
+        <span class="scope-ctl" id="rangeCtl" hidden>
+          <input type="date" id="rangeFrom" aria-label="Period start">
+          <span class="hint">to</span>
+          <input type="date" id="rangeTo" aria-label="Period end">
+          <select id="rangePreset" aria-label="Jump to a period">
+            <option value="">Jump to…</option>
+            <option value="week">This week</option>
+            <option value="month">This month</option>
+            <option value="lastmonth">Last month</option>
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="ytd">Year to date</option>
+          </select>
+        </span>
       </div>
     </div>
+    <p class="scope-note" id="scopeNote"></p>
     <div class="summary">
       <div class="stat lead">
         <div class="label" id="sNetLabel">Net P&amp;L</div>
@@ -315,12 +436,12 @@ footer p:last-child{margin-bottom:0;opacity:.8}
     <div class="filters">
       <select id="fSymbol" aria-label="Filter by symbol"><option value="">All symbols</option></select>
       <select id="fGrade" aria-label="Filter by grade">
-        <option value="">All grades</option>
-        <option value="S">S setups</option>
-        <option value="A">A setups</option>
-        <option value="B">B setups</option>
-        <option value="C">C setups</option>
-        <option value="-">Ungraded</option>
+        <option value="">Any rating</option>
+        <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+        <option value="3">&#9733;&#9733;&#9733;</option>
+        <option value="2">&#9733;&#9733;</option>
+        <option value="1">&#9733;</option>
+        <option value="0">Unrated</option>
       </select>
       <select id="fSide" aria-label="Filter by direction">
         <option value="">Long and short</option>
@@ -375,7 +496,7 @@ footer p:last-child{margin-bottom:0;opacity:.8}
         <h2 id="formTitle">Log a trade</h2>
         <span class="spacer"></span>
         <span class="grade-readout">
-          <span>Setup grade</span>
+          <span>Setup rating</span>
           <span class="grade-badge" id="gradeBadge">—</span>
         </span>
       </div>
@@ -392,6 +513,8 @@ footer p:last-child{margin-bottom:0;opacity:.8}
             <option value="MNQ">MNQ · $2/pt</option>
             <option value="ES">ES · $50/pt</option>
             <option value="MES">MES · $5/pt</option>
+            <option value="GC">GC · $100/pt</option>
+            <option value="MGC">MGC · $10/pt</option>
             <option value="OTHER">Other</option>
           </select>
         </div>
@@ -420,16 +543,32 @@ footer p:last-child{margin-bottom:0;opacity:.8}
           <input type="number" id="fFees" step="0.01" placeholder="0.00">
         </div>
         <div class="field wide">
-          <label for="fGradeOverride">Grade</label>
+          <label for="fGradeOverride">Rating</label>
           <select id="fGradeOverride">
             <option value="auto">Auto from confluences</option>
-            <option value="S">S</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="-">Ungraded</option>
+            <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+            <option value="3">&#9733;&#9733;&#9733;</option>
+            <option value="2">&#9733;&#9733;</option>
+            <option value="1">&#9733;</option>
+            <option value="0">Unrated</option>
           </select>
         </div>
 
         <div class="field full">
           <label>Confluences at the level</label>
           <div class="chips" id="chips"></div>
+        </div>
+
+        <div class="field full">
+          <label>Screenshots</label>
+          <div class="shotzone" id="shotZone">
+            <div class="shot-strip" id="shotStrip"></div>
+            <div class="shot-add">
+              <button type="button" class="btn sm" id="btnShot">Add screenshot</button>
+              <input type="file" id="shotFile" accept="image/*" multiple hidden>
+              <span class="hint" id="shotHint">or paste with Ctrl+V, or drop an image here</span>
+            </div>
+          </div>
         </div>
 
         <div class="field full">
@@ -449,8 +588,8 @@ footer p:last-child{margin-bottom:0;opacity:.8}
   <!-- grade breakdown -->
   <section>
     <div class="panel">
-      <h3 style="margin-bottom:14px">Does the grading hold up?</h3>
-      <table class="grades" id="gradeTable"></table>
+      <h3 style="margin-bottom:14px">Do the star ratings hold up?</h3>
+      <div class="table-scroll"><table class="grades" id="gradeTable"></table></div>
     </div>
   </section>
 
@@ -476,6 +615,13 @@ footer p:last-child{margin-bottom:0;opacity:.8}
   <p>Educational tool only. Nothing here is financial advice or a recommendation to trade, and past results are not a guide to future performance. Futures trading carries a substantial risk of loss.</p>
 </footer>
 
+<div id="printReport" aria-hidden="true"></div>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <img id="lbImg" alt="Trade screenshot">
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -483,7 +629,7 @@ footer p:last-child{margin-bottom:0;opacity:.8}
 
 /* ---------------- constants ---------------- */
 const KEY = "maliktrades.journal.v1";
-const PV = { NQ:20, MNQ:2, ES:50, MES:5, OTHER:1 };
+const PV = { NQ:20, MNQ:2, ES:50, MES:5, GC:100, MGC:10, OTHER:1 };
 const CONFLUENCES = [
   "NYVAH","NYPOC","NYVAL",
   "ONVAH","ONPOC","ONVAL",
@@ -498,17 +644,142 @@ const WEEKDAYS_SHORT = ["Mon","Tue","Wed","Thu","Fri"];
 /* ---------------- state ---------------- */
 let state = { trades: [] };
 let editingId = null;
-let selectedDay = null;          // "YYYY-MM-DD"
+let scopeMode = "all";           // "all" | "day" | "range"
+let scopeFrom = null, scopeTo = null;   // inclusive "YYYY-MM-DD"
+let selectedDay = null;          // set only in day mode
 let curveMode = "trade";         // "trade" | "day"
 let viewMonth = new Date();
 let side = "long";
 let activeConfluences = new Set();
+
+/* ---------------- screenshots (IndexedDB) ---------------- */
+const IDB_NAME = "maliktrades.shots", IDB_STORE = "shots";
+let shotCache = {};          // id -> dataURL, kept in memory for rendering
+let formShots = [];          // ids attached to the form right now
+let idbPromise = null;
+
+function idb(){
+  if(idbPromise) return idbPromise;
+  idbPromise = new Promise(res=>{
+    let r;
+    try{ r = indexedDB.open(IDB_NAME, 1); }
+    catch(e){ return res(null); }
+    r.onupgradeneeded = () => { try{ r.result.createObjectStore(IDB_STORE); }catch(e){} };
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => res(null);
+    r.onblocked = () => res(null);
+  });
+  return idbPromise;
+}
+async function shotPut(id, dataUrl){
+  const db = await idb(); if(!db) return false;
+  return new Promise(res=>{
+    try{
+      const tx = db.transaction(IDB_STORE,"readwrite");
+      tx.objectStore(IDB_STORE).put(dataUrl, id);
+      tx.oncomplete = ()=>res(true); tx.onerror = ()=>res(false); tx.onabort = ()=>res(false);
+    }catch(e){ res(false); }
+  });
+}
+async function shotDel(id){
+  const db = await idb(); if(!db) return;
+  try{
+    const tx = db.transaction(IDB_STORE,"readwrite");
+    tx.objectStore(IDB_STORE).delete(id);
+  }catch(e){}
+  delete shotCache[id];
+}
+async function shotLoadAll(){
+  const db = await idb(); if(!db) return {};
+  return new Promise(res=>{
+    const out = {};
+    try{
+      const tx = db.transaction(IDB_STORE,"readonly");
+      const cur = tx.objectStore(IDB_STORE).openCursor();
+      cur.onsuccess = e => {
+        const c = e.target.result;
+        if(c){ out[c.key] = c.value; c.continue(); } else res(out);
+      };
+      cur.onerror = ()=>res(out);
+    }catch(e){ res(out); }
+  });
+}
+// shrink before storing: chart screenshots don't need to be full size
+function compressImage(file){
+  return new Promise((res, rej)=>{
+    const fr = new FileReader();
+    fr.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const MAX = 1600;
+        let w = im.naturalWidth || im.width, hgt = im.naturalHeight || im.height;
+        if(!w || !hgt) return rej(new Error("bad image"));
+        if(Math.max(w,hgt) > MAX){ const s = MAX/Math.max(w,hgt); w = Math.round(w*s); hgt = Math.round(hgt*s); }
+        const c = document.createElement("canvas");
+        c.width = w; c.height = hgt;
+        c.getContext("2d").drawImage(im, 0, 0, w, hgt);
+        try{ res(c.toDataURL("image/jpeg", 0.72)); }catch(e){ rej(e); }
+      };
+      im.onerror = () => rej(new Error("bad image"));
+      im.src = fr.result;
+    };
+    fr.onerror = () => rej(new Error("unreadable"));
+    fr.readAsDataURL(file);
+  });
+}
+async function addShotFiles(files){
+  const list = [...files].filter(f => f && f.type && f.type.startsWith("image/"));
+  if(!list.length) return;
+  let added = 0;
+  for(const f of list){
+    try{
+      const url = await compressImage(f);
+      const id = "s"+uid();
+      const ok = await shotPut(id, url);
+      if(!ok){ toast("Couldn't save that image — storage may be blocked."); continue; }
+      shotCache[id] = url; formShots.push(id); added++;
+    }catch(e){ toast("That file couldn't be read as an image."); }
+  }
+  if(added){ renderFormShots(); toast(added+" screenshot"+(added===1?"":"s")+" attached."); }
+}
+function renderFormShots(){
+  const strip = $("shotStrip");
+  strip.innerHTML = formShots.map(id =>
+    `<span class="shot"><img src="${shotCache[id]||""}" alt="Screenshot" data-view="${id}"><button type="button" class="rm" data-rm="${id}" title="Remove">×</button></span>`
+  ).join("");
+  strip.querySelectorAll("[data-rm]").forEach(b => b.onclick = async () => {
+    const id = b.dataset.rm;
+    formShots = formShots.filter(x=>x!==id);
+    await shotDel(id);
+    renderFormShots();
+  });
+  strip.querySelectorAll("[data-view]").forEach(im => im.onclick = () => openLightbox(shotCache[im.dataset.view]));
+  $("shotHint").textContent = formShots.length
+    ? "Click a thumbnail to view it full size."
+    : "or paste with Ctrl+V, or drop an image here";
+}
+function openLightbox(url){
+  if(!url) return;
+  $("lbImg").src = url;
+  $("lightbox").hidden = false;
+}
+function closeLightbox(){ $("lightbox").hidden = true; $("lbImg").src = ""; }
+// drop images nothing points at any more
+async function pruneShots(){
+  const keep = new Set();
+  state.trades.forEach(t => (t.shots||[]).forEach(id => keep.add(id)));
+  formShots.forEach(id => keep.add(id));
+  for(const id of Object.keys(shotCache)){
+    if(!keep.has(id)) await shotDel(id);
+  }
+}
 
 /* ---------------- storage ---------------- */
 function load(){
   try{
     const raw = localStorage.getItem(KEY);
     if(raw){ const p = JSON.parse(raw); if(p && Array.isArray(p.trades)) state = p; }
+    state.trades.forEach(t => { t.grade = normaliseGrade(t.grade); });
   }catch(e){ console.warn("Could not read saved trades", e); }
 }
 function save(){
@@ -527,7 +798,16 @@ function prettyDate(s){ const d = fromIso(s); return d.getDate()+" "+MONTHS[d.ge
 function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),2200); }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 
-function autoGrade(n){ return n>=4?"S":n===3?"A":n===2?"B":n===1?"C":"-"; }
+const STAR_MAX = 4;
+function autoGrade(n){ return Math.min(STAR_MAX, Math.max(0, n|0)); }
+function starStr(g){ return g>0 ? "\u2605".repeat(g) : ""; }
+function gradeLabel(g){ return g>0 ? starStr(g) : "Unrated"; }
+// older journals stored letters
+function normaliseGrade(g){
+  if(typeof g === "number") return Math.min(STAR_MAX, Math.max(0, g|0));
+  const map = {S:4, A:3, B:2, C:1, "-":0};
+  return map[g] !== undefined ? map[g] : 0;
+}
 
 function tradePnl(t){ return typeof t.pnl === "number" ? t.pnl : 0; }
 
@@ -545,13 +825,26 @@ function filtered(){
   const sym = $("fSymbol").value, grade = $("fGrade").value, sd = $("fSide").value;
   return state.trades.filter(t =>
     (!sym || t.sym===sym) &&
-    (!grade || t.grade===grade) &&
+    (grade==="" || t.grade===Number(grade)) &&
     (!sd || t.dir===sd)
   ).sort((a,b)=> a.date===b.date ? (a.seq-b.seq) : (a.date<b.date?-1:1));
 }
-function forLog(){
+function inScope(d){
+  return (!scopeFrom || d>=scopeFrom) && (!scopeTo || d<=scopeTo);
+}
+function scoped(){
   const base = filtered();
-  return selectedDay ? base.filter(t=>t.date===selectedDay) : base;
+  return scopeMode==="all" ? base : base.filter(t=>inScope(t.date));
+}
+function forLog(){ return scoped(); }
+function scopeLabel(){
+  if(scopeMode==="day") return selectedDay ? prettyDate(selectedDay) : "Pick a day";
+  if(scopeMode==="range"){
+    if(!scopeFrom && !scopeTo) return "Pick a period";
+    if(scopeFrom && scopeTo) return prettyDate(scopeFrom)+" – "+prettyDate(scopeTo);
+    return scopeFrom ? "From "+prettyDate(scopeFrom) : "Up to "+prettyDate(scopeTo);
+  }
+  return "All time";
 }
 
 /* ---------------- stats ---------------- */
@@ -582,12 +875,12 @@ function stats(list){
 }
 
 function renderSummary(){
-  const dayMode = !!selectedDay;
-  const s = stats(forLog());
-  $("sNetLabel").textContent = dayMode ? "Session P&L" : "Net P&L";
+  const dayMode = scopeMode==="day" && !!selectedDay;
+  const s = stats(scoped());
+  $("sNetLabel").textContent = dayMode ? "Session P&L" : (scopeMode==="range" ? "Period P&L" : "Net P&L");
   $("sDdLabel").textContent = dayMode ? "Deepest point" : "Max drawdown";
   const net = $("sNet"); net.textContent = money0(s.net); net.className = "value num "+cls(s.net);
-  $("sNetSub").textContent = !s.n ? (dayMode ? "Nothing logged that day" : "No trades yet")
+  $("sNetSub").textContent = !s.n ? (scopeMode==="all" ? "No trades yet" : "Nothing logged in this window")
     : dayMode ? `${s.n} trade${s.n===1?"":"s"} on ${prettyDate(selectedDay)}`
               : `${s.n} trade${s.n===1?"":"s"} over ${s.dayCount} session${s.dayCount===1?"":"s"}`;
   $("sWin").textContent = s.n ? s.winRate.toFixed(0)+"%" : "—";
@@ -599,7 +892,7 @@ function renderSummary(){
   $("sDd").textContent = s.n ? money0(s.maxDd) : "—";
   if(!s.n){ $("sDdSub").textContent = ""; }
   else if(dayMode){
-    const vals = forLog().map(tradePnl);
+    const vals = scoped().map(tradePnl);
     const w = vals.filter(v=>v>0), l = vals.filter(v=>v<0);
     $("sDdSub").textContent = [
       w.length ? `biggest win ${money0(Math.max(...w))}` : "no winners",
@@ -613,7 +906,7 @@ function renderSummary(){
 
 /* ---------------- equity curve ---------------- */
 function curvePoints(){
-  const list = filtered();
+  const list = scoped();
   if(curveMode==="trade"){
     let eq=0;
     return list.map((t,i)=>{ eq+=tradePnl(t); return {x:i+1, y:eq, label:`Trade ${i+1} · ${prettyDate(t.date)}`, sub:`${t.sym} ${t.dir} · ${money(tradePnl(t))}`}; });
@@ -634,7 +927,7 @@ function renderCurve(){
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
 
   if(pts.length === 0){
-    svg.innerHTML = `<text x="${W/2}" y="${H/2}" fill="rgba(247,239,220,.45)" font-size="14" text-anchor="middle">Your curve starts with the first logged trade.</text>`;
+    svg.innerHTML = `<text x="${W/2}" y="${H/2}" fill="rgba(247,239,220,.45)" font-size="14" text-anchor="middle">${scopeMode==="all" ? "Your curve starts with the first logged trade." : "No trades in this window."}</text>`;
     return;
   }
 
@@ -737,7 +1030,7 @@ function renderCalendar(){
       const alpha = v===undefined?0:Math.min(1, Math.abs(v)/maxAbs)*0.42+0.08;
       const bg = v===undefined ? "transparent" : (v>0?`rgba(126,195,160,${alpha})`:(v<0?`rgba(207,115,97,${alpha})`:"rgba(247,239,220,.06)"));
       html += `<td style="background:${bg}">
-        <button class="day${selectedDay===k?" sel":""}${k===todayKey?" today":""}" data-day="${k}">
+        <button class="day${(scopeMode!=="all"&&inScope(k))?" sel":""}${k===todayKey?" today":""}" data-day="${k}">
           <span class="dnum">${d}</span>
           ${v!==undefined?`<span class="dpnl num ${cls(v)}">${money0(v)}</span><span class="dn">${nTrades} trade${nTrades===1?"":"s"}</span>`:``}
         </button></td>`;
@@ -750,8 +1043,10 @@ function renderCalendar(){
   $("cal").querySelectorAll(".day").forEach(b=>{
     b.onclick = () => {
       const k = b.dataset.day;
-      setDay(selectedDay===k ? null : k);
-      if(selectedDay) document.querySelector("#logTable").scrollIntoView({behavior:"smooth", block:"center"});
+      if(scopeMode==="range"){ extendRange(k); return; }
+      if(scopeMode==="day" && selectedDay===k){ setScope("all"); return; }
+      setDay(k);
+      document.querySelector("#logTable").scrollIntoView({behavior:"smooth", block:"center"});
     };
   });
 
@@ -765,9 +1060,9 @@ function renderCalendar(){
 
 /* ---------------- breakdown tables ---------------- */
 function renderBreakdowns(){
-  const list = filtered();
-  const grades = ["S","A","B","C","-"];
-  let html = `<thead><tr><th>Grade</th><th>Trades</th><th>Win rate</th><th class="right">Net</th><th class="right">Per trade</th></tr></thead><tbody>`;
+  const list = scoped();
+  const grades = [4,3,2,1,0];
+  let html = `<thead><tr><th>Rating</th><th>Trades</th><th>Win rate</th><th class="right">Net</th><th class="right">Per trade</th></tr></thead><tbody>`;
   let any = false;
   grades.forEach(g=>{
     const sub = list.filter(t=>t.grade===g);
@@ -775,7 +1070,7 @@ function renderBreakdowns(){
     any = true;
     const st = stats(sub);
     html += `<tr>
-      <td><span class="gradepill">${g==="-"?"Ungraded":g}</span></td>
+      <td><span class="gradepill">${gradeLabel(g)}</span></td>
       <td class="num">${st.n}</td>
       <td><div style="display:flex;align-items:center;gap:8px"><span class="num">${st.winRate.toFixed(0)}%</span>
         <div class="bar-track" style="flex:1"><div class="bar-fill" style="width:${st.winRate.toFixed(0)}%;background:${st.net>=0?"var(--jade)":"var(--clay)"}"></div></div></div></td>
@@ -784,7 +1079,7 @@ function renderBreakdowns(){
     </tr>`;
   });
   html += "</tbody>";
-  $("gradeTable").innerHTML = any ? html : `<tbody><tr><td class="hint" style="padding:8px 0;border:0">Grade a few trades and the S-vs-C comparison appears here.</td></tr></tbody>`;
+  $("gradeTable").innerHTML = any ? html : `<tbody><tr><td class="hint" style="padding:8px 0;border:0">Rate a few trades and the four-star versus one-star comparison appears here.</td></tr></tbody>`;
 }
 
 /* ---------------- log table ---------------- */
@@ -793,7 +1088,7 @@ function renderLog(){
   const t = $("logTable");
   $("emptyState").hidden = state.trades.length !== 0;
   $("welcome").hidden = state.trades.length !== 0;
-  $("logCount").textContent = list.length ? `${list.length} shown${selectedDay?" · "+prettyDate(selectedDay):""}` : "";
+  $("logCount").textContent = list.length ? `${list.length} shown${scopeMode==="all"?"":" · "+scopeLabel()}` : "";
 
   if(!list.length){ t.innerHTML = ""; return; }
 
@@ -808,9 +1103,12 @@ function renderLog(){
     html += `<tr>
       <td>${prettyDate(tr.date)}</td>
       <td>
-        <div><span class="gradepill">${tr.grade==="-"?"":tr.grade}</span> ${tr.sym}</div>
+        <div><span class="gradepill">${starStr(tr.grade)}</span> ${tr.sym}</div>
         ${tr.conf && tr.conf.length ? `<div class="tag">${tr.conf.join(" · ")}</div>`:``}
         ${tr.notes ? `<div class="note">${escapeHtml(tr.notes)}</div>`:``}
+        ${(tr.shots||[]).filter(id=>shotCache[id]).length ? `<div class="log-shots">${
+          (tr.shots||[]).filter(id=>shotCache[id]).map(id=>`<img src="${shotCache[id]}" alt="Screenshot" data-view="${id}">`).join("")
+        }</div>`:``}
       </td>
       <td>${tr.dir}</td>
       <td class="right num">${tr.qty}</td>
@@ -830,12 +1128,14 @@ function renderLog(){
     const tr = state.trades.find(x=>x.id===b.dataset.del);
     if(!tr) return;
     if(confirm(`Delete the ${tr.sym} trade on ${prettyDate(tr.date)} (${money(tradePnl(tr))})?`)){
+      (tr.shots||[]).forEach(id => shotDel(id));
       state.trades = state.trades.filter(x=>x.id!==b.dataset.del);
       if(editingId===b.dataset.del) cancelEdit();
       save(); renderAll(); toast("Trade deleted.");
     }
   });
   t.querySelectorAll("[data-edit]").forEach(b=> b.onclick = () => startEdit(b.dataset.edit));
+  t.querySelectorAll("[data-view]").forEach(im => im.onclick = () => openLightbox(shotCache[im.dataset.view]));
 }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
@@ -862,12 +1162,12 @@ function syncChips(){
 }
 function refreshGradeBadge(){
   const ov = $("fGradeOverride").value;
-  const g = ov==="auto" ? autoGrade(activeConfluences.size) : ov;
-  $("gradeBadge").textContent = g==="-" ? "—" : g;
+  const g = ov==="auto" ? autoGrade(activeConfluences.size) : Number(ov);
+  $("gradeBadge").textContent = g>0 ? starStr(g) : "—";
   const n = activeConfluences.size;
   const gradeTxt = ov==="auto"
-    ? `${n} confluence${n===1?"":"s"} selected — grades ${g==="-"?"as ungraded":"as "+g}.`
-    : `Grade set manually to ${g==="-"?"ungraded":g}.`;
+    ? `${n} confluence${n===1?"":"s"} selected — ${g>0 ? starStr(g) : "unrated"}.`
+    : `Rating set manually to ${g>0 ? starStr(g) : "unrated"}.`;
   const numv = i => { const v=$(i).value.trim(); return v===""?null:Number(v); };
   const risk = riskFor({sym:$("fSym").value, qty:Number($("fQty").value)||1, sl:numv("fSl")});
   let riskTxt = "";
@@ -897,8 +1197,8 @@ function readForm(){
     sym, dir:side, qty, sl, fees,
     pnl: pnl===null?null:Number(pnl.toFixed(2)),
     risk: riskFor({sym, qty, sl}),
-    grade: ov==="auto" ? autoGrade(conf.length) : ov,
-    conf, notes: $("fNotes").value.trim()
+    grade: ov==="auto" ? autoGrade(conf.length) : Number(ov),
+    conf, shots: formShots.slice(), notes: $("fNotes").value.trim()
   };
 }
 function clearForm(keepDate){
@@ -906,6 +1206,7 @@ function clearForm(keepDate){
   $("fSl").value=""; $("fPnl").value=""; $("fFees").value="";
   $("fQty").value="1"; $("fNotes").value=""; $("fGradeOverride").value="auto";
   activeConfluences.clear(); syncChips(); setSide("long");
+  formShots = []; renderFormShots();
   $("fDate").value = keepDate ? d : iso(new Date());
   refreshGradeBadge();
 }
@@ -917,7 +1218,8 @@ function startEdit(id){
   $("fFees").value = t.fees||""; $("fPnl").value = (typeof t.pnl==="number" ? Number((t.pnl + (t.fees||0)).toFixed(2)) : "");
   $("fNotes").value = t.notes||"";
   activeConfluences = new Set(t.conf||[]); syncChips();
-  $("fGradeOverride").value = (t.grade === autoGrade((t.conf||[]).length)) ? "auto" : t.grade;
+  formShots = (t.shots||[]).filter(id => shotCache[id]); renderFormShots();
+  $("fGradeOverride").value = (t.grade === autoGrade((t.conf||[]).length)) ? "auto" : String(t.grade);
   refreshGradeBadge();
   $("formTitle").textContent = "Edit trade";
   $("btnSave").textContent = "Save changes";
@@ -930,6 +1232,7 @@ function cancelEdit(){
   $("btnSave").textContent = "Add trade";
   $("btnCancel").hidden = true;
   clearForm(true);
+  pruneShots();
 }
 function saveTrade(){
   const data = readForm();
@@ -945,9 +1248,159 @@ function saveTrade(){
   }else{
     const seq = state.trades.filter(t=>t.date===data.date).length;
     state.trades.push(Object.assign({id:uid(), seq}, data));
-    save(); clearForm(true); renderAll(); toast("Trade added.");
-    viewMonth = fromIso(data.date); renderCalendar();
+    save(); clearForm(true);
+    viewMonth = fromIso(data.date);
+    if(scopeMode!=="all" && !inScope(data.date)){
+      setDay(data.date);
+      toast("Trade added — showing "+prettyDate(data.date)+".");
+    } else {
+      renderAll();
+      toast("Trade added.");
+    }
   }
+}
+
+/* ---------------- PDF report ---------------- */
+function printCurveSvg(W, H){
+  const pts = curvePoints();
+  if(pts.length < 2) return '<div style="font-size:11px;color:rgba(247,239,220,.5)">Not enough trades in this window to draw a curve.</div>';
+  const padL=56, padR=8, padT=10, padB=18;
+  const ys = pts.map(p=>p.y).concat([0]);
+  let min = Math.min(...ys), max = Math.max(...ys);
+  if(min===max){ min-=100; max+=100; }
+  const padY=(max-min)*0.12; min-=padY; max+=padY;
+  const n = pts.length;
+  const X = i => padL + (W-padL-padR)*i/(n-1);
+  const Y = v => padT + (H-padT-padB)*(1-(v-min)/(max-min));
+  let grid="";
+  for(let i=0;i<=4;i++){
+    const v=min+(max-min)*i/4, y=Y(v);
+    grid += `<line x1="${padL}" x2="${W-padR}" y1="${y}" y2="${y}" stroke="rgba(247,239,220,.12)" stroke-width="1"/>`;
+    grid += `<text x="${padL-7}" y="${y+3.5}" fill="rgba(247,239,220,.55)" font-size="9" text-anchor="end">${money0(v)}</text>`;
+  }
+  const zero = (0>=min&&0<=max) ? `<line x1="${padL}" x2="${W-padR}" y1="${Y(0)}" y2="${Y(0)}" stroke="rgba(247,239,220,.3)" stroke-dasharray="3 3"/>` : "";
+  const line = pts.map((p,i)=>`${i?"L":"M"}${X(i).toFixed(1)},${Y(p.y).toFixed(1)}`).join(" ");
+  const up = pts[n-1].y >= 0;
+  const col = up ? "#7EC3A0" : "#CF7361";
+  const area = line + ` L${X(n-1).toFixed(1)},${Y(Math.max(min,0)).toFixed(1)} L${X(0).toFixed(1)},${Y(Math.max(min,0)).toFixed(1)} Z`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="prfill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${col}" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="${col}" stop-opacity="0"/>
+    </linearGradient></defs>
+    ${grid}${zero}
+    <path d="${area}" fill="url(#prfill)"/>
+    <path d="${line}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${X(n-1).toFixed(1)}" cy="${Y(pts[n-1].y).toFixed(1)}" r="2.6" fill="${col}"/>
+  </svg>`;
+}
+function buildReport(){
+  const list = scoped();
+  const s = stats(list);
+  const pc = v => v>0?"pr-pos":(v<0?"pr-neg":"");
+  const when = new Date();
+  const stamp = when.getDate()+" "+MONTHS[when.getMonth()]+" "+when.getFullYear();
+
+  const statTiles = [
+    ["Net P&L", money0(s.net), `${s.n} trade${s.n===1?"":"s"} · ${s.dayCount} session${s.dayCount===1?"":"s"}`, pc(s.net)],
+    ["Win rate", s.n? s.winRate.toFixed(0)+"%" : "—", s.n?`${s.wins} won · ${s.losses} lost`:"", ""],
+    ["Profit factor", s.n? (s.pf===Infinity?"\u221e":s.pf.toFixed(2)) : "—", s.n?`${money0(s.gp)} vs ${money0(s.gl)}`:"", ""],
+    ["Expectancy", s.n? money(s.expectancy) : "—", s.n?`avg win ${money0(s.avgWin)} · avg loss ${money0(s.avgLoss)}`:"", pc(s.expectancy)],
+    ["Max drawdown", s.n? money0(s.maxDd) : "—", s.dayCount?`best ${money0(s.best)} · worst ${money0(s.worst)}`:"", ""]
+  ].map(([l,v,sub,c]) => `<div class="pr-stat"><div class="l">${l}</div><div class="v ${c}">${v}</div><div class="s">${sub}</div></div>`).join("");
+
+  // star breakdown
+  let starRows = "";
+  [4,3,2,1,0].forEach(g=>{
+    const sub = list.filter(t=>t.grade===g);
+    if(!sub.length) return;
+    const st = stats(sub);
+    starRows += `<tr>
+      <td><span class="pr-stars">${g>0?starStr(g):""}</span>${g>0?"":"Unrated"}</td>
+      <td class="r">${st.n}</td>
+      <td class="r">${st.winRate.toFixed(0)}%</td>
+      <td class="r ${pc(st.net)}">${money0(st.net)}</td>
+      <td class="r ${pc(st.expectancy)}">${money(st.expectancy)}</td></tr>`;
+  });
+  const starTable = starRows
+    ? `<h2 class="pr-sec">By star rating</h2><table class="pr">
+       <thead><tr><th>Rating</th><th class="r">Trades</th><th class="r">Win rate</th><th class="r">Net</th><th class="r">Per trade</th></tr></thead>
+       <tbody>${starRows}</tbody></table>`
+    : "";
+
+  // daily totals
+  const dayKeys = Object.keys(s.days).sort();
+  const dayRows = dayKeys.map(k=>{
+    const v = s.days[k];
+    const nt = list.filter(t=>t.date===k).length;
+    return `<tr><td>${prettyDate(k)}</td><td class="r">${nt}</td><td class="r ${pc(v)}">${money(v)}</td></tr>`;
+  }).join("");
+  const dayTable = dayRows
+    ? `<h2 class="pr-sec">Daily P&L</h2><table class="pr">
+       <thead><tr><th>Date</th><th class="r">Trades</th><th class="r">Net</th></tr></thead><tbody>${dayRows}</tbody></table>`
+    : "";
+
+  // trade log
+  const rows = list.slice().reverse().map(t=>{
+    const p = tradePnl(t);
+    const rk = tradeRisk(t);
+    const r = (rk && rk>0) ? (p/rk) : null;
+    const shots = (t.shots||[]).filter(id=>shotCache[id]);
+    return `<tr>
+      <td>${prettyDate(t.date)}</td>
+      <td>
+        <div><span class="pr-stars">${starStr(t.grade)}</span> ${t.sym}</div>
+        ${t.conf && t.conf.length ? `<div class="pr-conf">${t.conf.join(" \u00b7 ")}</div>`:``}
+        ${t.notes ? `<div class="pr-note">${escapeHtml(t.notes)}</div>`:``}
+        ${shots.length ? `<div class="pr-shots">${shots.map(id=>`<img src="${shotCache[id]}">`).join("")}</div>`:``}
+      </td>
+      <td>${t.dir}</td>
+      <td class="r">${t.qty}</td>
+      <td class="r">${t.sl!=null&&t.sl!==""?t.sl:"—"}</td>
+      <td class="r">${rk?money0(rk):"—"}</td>
+      <td class="r ${r===null?"":pc(r)}">${r===null?"—":(r>0?"+":"")+r.toFixed(2)+"R"}</td>
+      <td class="r ${pc(p)}">${money(p)}</td></tr>`;
+  }).join("");
+  const logTable = rows
+    ? `<h2 class="pr-sec">Trade log</h2><table class="pr">
+       <thead><tr><th>Date</th><th>Setup</th><th>Side</th><th class="r">Qty</th><th class="r">Stop</th><th class="r">Risk</th><th class="r">R</th><th class="r">P&L</th></tr></thead>
+       <tbody>${rows}</tbody></table>`
+    : `<div style="font-size:11px;color:#666">No trades in this window.</div>`;
+
+  const filters = [];
+  if($("fSymbol").value) filters.push($("fSymbol").value);
+  if($("fGrade").value!=="") filters.push($("fGrade").value==="0" ? "unrated" : starStr(Number($("fGrade").value)));
+  if($("fSide").value) filters.push($("fSide").value+" only");
+
+  const bannerSrc = (document.querySelector(".banner img")||{}).src || "";
+  return `
+    ${bannerSrc ? `<div class="pr-banner"><img src="${bannerSrc}" alt=""></div>` : ""}
+    <div class="pr-head">
+      <h1>MalikTrades Journal</h1>
+      <div class="pr-scope">
+        ${scopeMode==="all" ? "All time" : escapeHtml(scopeLabel())}<br>
+        ${filters.length ? escapeHtml(filters.join(" \u00b7 "))+"<br>" : ""}
+        Generated ${stamp}
+      </div>
+    </div>
+    <div class="pr-stats">${statTiles}</div>
+    <h2 class="pr-sec">Equity curve</h2>
+    <div class="pr-curve">${printCurveSvg(760, 190)}</div>
+    ${starTable}
+    ${dayTable}
+    ${logTable}
+    <div class="pr-foot">
+      Produced by the MalikTrades Journal. Educational record only — not financial advice, and past results are not a guide to future performance.
+    </div>`;
+}
+function exportPdf(){
+  if(!scoped().length){ toast("Nothing to export in this window."); return; }
+  $("printReport").innerHTML = buildReport();
+  const done = () => { $("printReport").innerHTML = ""; };
+  window.addEventListener("afterprint", done, {once:true});
+  setTimeout(()=>{ window.print(); }, 60);
+  const win = scopeMode==="all" ? "all time" : scopeLabel();
+  toast("Exporting " + win + " \u2014 pick \u201cSave as PDF\u201d, and keep Background graphics on.");
 }
 
 /* ---------------- backup ---------------- */
@@ -959,14 +1412,18 @@ function download(name, text, type){
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
 }
 function exportJson(){
-  download(`maliktrades-journal-${iso(new Date())}.json`, JSON.stringify(state,null,2), "application/json");
-  toast("Backup downloaded.");
+  const used = {};
+  state.trades.forEach(t => (t.shots||[]).forEach(id => { if(shotCache[id]) used[id] = shotCache[id]; }));
+  const payload = {trades: state.trades, shots: used};
+  download(`maliktrades-journal-${iso(new Date())}.json`, JSON.stringify(payload), "application/json");
+  const n = Object.keys(used).length;
+  toast("Backup downloaded" + (n ? ` — includes ${n} screenshot${n===1?"":"s"}.` : "."));
 }
 function exportCsv(){
-  const head = ["date","symbol","direction","contracts","stop_points","risk","fees","pnl","grade","confluences","notes"];
-  const rows = filtered().map(t=>[
+  const head = ["date","symbol","direction","contracts","stop_points","risk","fees","pnl","stars","confluences","screenshots","notes"];
+  const rows = scoped().map(t=>[
     t.date,t.sym,t.dir,t.qty,t.sl??"",tradeRisk(t)??"",t.fees||0,tradePnl(t),t.grade,
-    (t.conf||[]).join("; "), (t.notes||"").replace(/\r?\n/g," ")
+    (t.conf||[]).join("; "), (t.shots||[]).length, (t.notes||"").replace(/\r?\n/g," ")
   ]);
   const esc = v => `"${String(v).replace(/"/g,'""')}"`;
   download(`maliktrades-trades-${iso(new Date())}.csv`, [head, ...rows].map(r=>r.map(esc).join(",")).join("\n"), "text/csv");
@@ -980,7 +1437,13 @@ function importJson(file){
       if(!p || !Array.isArray(p.trades)) throw new Error("no trades array");
       if(!confirm(`Restore ${p.trades.length} trades? This replaces what's currently in the journal.`)) return;
       state = {trades:p.trades};
-      save(); renderAll(); toast("Backup restored.");
+      state.trades.forEach(t => { t.grade = normaliseGrade(t.grade); });
+      save();
+      const shots = (p.shots && typeof p.shots === "object") ? p.shots : {};
+      const ids = Object.keys(shots);
+      Promise.all(ids.map(id => shotPut(id, shots[id]).then(ok => { if(ok) shotCache[id] = shots[id]; })))
+        .then(() => { renderAll(); toast("Backup restored" + (ids.length ? ` — ${ids.length} screenshot${ids.length===1?"":"s"} too.` : ".")); });
+      renderAll();
     }catch(e){
       toast("That file isn't a journal backup.");
     }
@@ -989,11 +1452,34 @@ function importJson(file){
 }
 
 /* ---------------- render ---------------- */
-function setDay(k){
-  selectedDay = k;
-  if(k){ viewMonth = fromIso(k); }
+function lastTradedDay(){
+  const ds = state.trades.map(t=>t.date).sort();
+  return ds.length ? ds[ds.length-1] : iso(new Date());
+}
+function setScope(mode, opts){
+  scopeMode = mode;
+  if(mode==="all"){ scopeFrom = scopeTo = selectedDay = null; }
+  else if(mode==="day"){
+    selectedDay = (opts && opts.day) || selectedDay || lastTradedDay();
+    scopeFrom = scopeTo = selectedDay;
+    viewMonth = fromIso(selectedDay);
+  } else {
+    selectedDay = null;
+    const explicit = opts && ("from" in opts || "to" in opts);
+    if(opts && "from" in opts) scopeFrom = opts.from || null;
+    if(opts && "to" in opts) scopeTo = opts.to || null;
+    if(!explicit && scopeFrom && scopeFrom===scopeTo){ scopeFrom = scopeTo = null; }
+    if(!scopeFrom && !scopeTo){
+      const end = lastTradedDay(), d = fromIso(end);
+      scopeFrom = iso(new Date(d.getFullYear(), d.getMonth(), d.getDate()-29));
+      scopeTo = end;
+    }
+    if(scopeFrom && scopeTo && scopeFrom>scopeTo){ const t=scopeFrom; scopeFrom=scopeTo; scopeTo=t; }
+    if(scopeTo) viewMonth = fromIso(scopeTo);
+  }
   renderAll();
 }
+function setDay(k){ setScope("day", {day:k}); }
 function stepDay(dir){
   const base = selectedDay ? fromIso(selectedDay) : new Date();
   let d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + dir);
@@ -1001,10 +1487,41 @@ function stepDay(dir){
   while((d.getDay()===0 || d.getDay()===6) && guard++ < 7){ d = new Date(d.getFullYear(), d.getMonth(), d.getDate()+dir); }
   setDay(iso(d));
 }
+function extendRange(k){
+  if(!scopeFrom || (scopeFrom && scopeTo)) setScope("range", {from:k, to:null});
+  else setScope("range", {to:k});
+}
+function applyPreset(p){
+  const today = new Date();
+  const end = iso(today);
+  const mk = (a,b)=> setScope("range", {from:a, to:b});
+  if(p==="week"){
+    const dow = (today.getDay()+6)%7;
+    mk(iso(new Date(today.getFullYear(), today.getMonth(), today.getDate()-dow)), end);
+  } else if(p==="month"){
+    mk(iso(new Date(today.getFullYear(), today.getMonth(), 1)), end);
+  } else if(p==="lastmonth"){
+    mk(iso(new Date(today.getFullYear(), today.getMonth()-1, 1)),
+       iso(new Date(today.getFullYear(), today.getMonth(), 0)));
+  } else if(p==="ytd"){
+    mk(iso(new Date(today.getFullYear(), 0, 1)), end);
+  } else if(p==="30" || p==="90"){
+    mk(iso(new Date(today.getFullYear(), today.getMonth(), today.getDate()-(Number(p)-1))), end);
+  }
+}
 function renderScope(){
-  $("scopeTitle").textContent = selectedDay ? prettyDate(selectedDay) : "All time";
+  $("scopeTitle").textContent = scopeLabel();
+  $("scopeNote").textContent = scopeMode==="all"
+    ? "Everything you've logged. Pick Day or Range to narrow the stats, the curve, the log and what a PDF or CSV export covers."
+    : "Stats, curve, log and any export now cover " + scopeLabel() + " only.";
+  $("scopeAll").setAttribute("aria-pressed", String(scopeMode==="all"));
+  $("scopeDayBtn").setAttribute("aria-pressed", String(scopeMode==="day"));
+  $("scopeRangeBtn").setAttribute("aria-pressed", String(scopeMode==="range"));
+  $("dayCtl").hidden = scopeMode!=="day";
+  $("rangeCtl").hidden = scopeMode!=="range";
   $("scopeDate").value = selectedDay || "";
-  $("scopeAll").setAttribute("aria-pressed", String(!selectedDay));
+  $("rangeFrom").value = scopeMode==="range" ? (scopeFrom||"") : "";
+  $("rangeTo").value = scopeMode==="range" ? (scopeTo||"") : "";
 }
 function renderSymbolFilter(){
   const sel = $("fSymbol"), cur = sel.value;
@@ -1040,10 +1557,15 @@ function init(){
 
   ["fSymbol","fGrade","fSide"].forEach(id => $(id).onchange = renderAll);
 
-  $("scopeAll").onclick = ()=> setDay(null);
-  $("scopeDate").onchange = e => setDay(e.target.value || null);
+  $("scopeAll").onclick = ()=> setScope("all");
+  $("scopeDayBtn").onclick = ()=> setScope("day");
+  $("scopeRangeBtn").onclick = ()=> setScope("range");
+  $("scopeDate").onchange = e => { if(e.target.value) setDay(e.target.value); };
   $("dayPrev").onclick = ()=> stepDay(-1);
   $("dayNext").onclick = ()=> stepDay(1);
+  $("rangeFrom").onchange = e => setScope("range", {from:e.target.value});
+  $("rangeTo").onchange = e => setScope("range", {to:e.target.value});
+  $("rangePreset").onchange = e => { if(e.target.value){ applyPreset(e.target.value); e.target.value=""; } };
 
   $("prevMonth").onclick = ()=>{ viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()-1, 1); renderCalendar(); };
   $("nextMonth").onclick = ()=>{ viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth()+1, 1); renderCalendar(); };
@@ -1052,7 +1574,28 @@ function init(){
   $("curveTrade").onclick = ()=>{ curveMode="trade"; $("curveTrade").setAttribute("aria-pressed","true"); $("curveDay").setAttribute("aria-pressed","false"); renderCurve(); };
   $("curveDay").onclick = ()=>{ curveMode="day"; $("curveDay").setAttribute("aria-pressed","true"); $("curveTrade").setAttribute("aria-pressed","false"); renderCurve(); };
 
+  $("btnShot").onclick = ()=> $("shotFile").click();
+  $("shotFile").onchange = e => { addShotFiles(e.target.files); e.target.value=""; };
+  document.addEventListener("paste", e => {
+    const items = e.clipboardData && e.clipboardData.files;
+    if(items && items.length && [...items].some(f=>f.type.startsWith("image/"))){
+      e.preventDefault();
+      addShotFiles(items);
+    }
+  });
+  const zone = $("shotZone");
+  ["dragenter","dragover"].forEach(ev => zone.addEventListener(ev, e => {
+    e.preventDefault(); zone.classList.add("drag");
+  }));
+  ["dragleave","drop"].forEach(ev => zone.addEventListener(ev, e => {
+    e.preventDefault(); zone.classList.remove("drag");
+  }));
+  zone.addEventListener("drop", e => { if(e.dataTransfer && e.dataTransfer.files) addShotFiles(e.dataTransfer.files); });
+  $("lbClose").onclick = closeLightbox;
+  $("lightbox").onclick = e => { if(e.target.id!=="lbImg") closeLightbox(); };
+
   $("btnExport").onclick = exportJson;
+  $("btnPdf").onclick = exportPdf;
   $("btnCsv").onclick = exportCsv;
   $("btnImport").onclick = ()=>$("fileImport").click();
   $("fileImport").onchange = e => { if(e.target.files[0]) importJson(e.target.files[0]); e.target.value=""; };
@@ -1063,12 +1606,20 @@ function init(){
 
   document.addEventListener("keydown", e=>{
     if(e.key==="Enter" && (e.metaKey||e.ctrlKey)) saveTrade();
+    if(e.key==="Escape" && !$("lightbox").hidden){ closeLightbox(); return; }
     if(e.key==="Escape" && editingId) cancelEdit();
   });
 
   let rt; window.addEventListener("resize", ()=>{ clearTimeout(rt); rt=setTimeout(renderCurve,120); });
 
   renderAll();
+
+  shotLoadAll().then(all => {
+    shotCache = all;
+    pruneShots();
+    renderLog();
+    renderFormShots();
+  });
 }
 init();
 </script>
