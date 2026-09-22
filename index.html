@@ -4,6 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MalikTrades Journal</title>
+<meta name="description" content="A free trading journal for futures traders. Log trades against your levels, grade setups S to C, and watch your P&amp;L calendar and equity curve build. Runs entirely in your browser.">
+<meta name="theme-color" content="#1E4C52">
+<link rel="icon" href="banner.jpg">
+
+<!-- Link preview. Replace the two URLs below with your own once hosted,
+     e.g. https://journal.maliktrades.com/ and .../banner.jpg -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MalikTrades">
+<meta property="og:title" content="MalikTrades Journal">
+<meta property="og:description" content="Log your trades, grade your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
+<meta property="og:image" content="banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MalikTrades Journal">
+<meta name="twitter:description" content="Log your trades, grade your setups, and watch your P&amp;L calendar and equity curve build. Free, and your data never leaves your browser.">
+<meta name="twitter:image" content="banner.jpg">
 <style>
 :root{
   --sky:#3F6F74;
@@ -186,6 +201,17 @@ tr:hover .rowbtns{opacity:1}
 .bar-track{height:5px;background:rgba(247,239,220,0.1);border-radius:3px;overflow:hidden;min-width:60px}
 .bar-fill{height:100%;background:var(--jade)}
 
+.welcome h3{margin-bottom:12px}
+.welcome p{max-width:66ch;color:var(--muted);margin:0 0 10px}
+.welcome p:last-child{margin-bottom:0}
+.welcome strong{color:var(--cream);font-weight:600}
+footer{
+  max-width:1180px;margin:0 auto;padding:26px 24px 60px;
+  border-top:1px solid var(--line);
+}
+footer p{color:var(--muted);font-size:13px;max-width:70ch;margin:0 0 8px;line-height:1.55}
+footer p:last-child{margin-bottom:0;opacity:.8}
+@media (max-width:900px){ footer{padding:24px 16px 48px} }
 .toast{
   position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
   background:var(--cream);color:var(--ground);padding:9px 16px;border-radius:3px;
@@ -232,6 +258,16 @@ tr:hover .rowbtns{opacity:1}
 </div>
 
 <main>
+
+  <!-- first run -->
+  <section id="welcome" style="margin-top:22px" hidden>
+    <div class="panel welcome">
+      <h3>A trading journal you can keep</h3>
+      <p>Log a trade below and everything here fills in: a P&amp;L calendar, an equity curve, and the stats that tell you whether your edge is real. Nothing to set up, no account, free.</p>
+      <p>Tick the levels your entry was at and the setup grades itself — four or more confluences is an S, three an A, two a B, one a C. After a few dozen trades the grade table shows you whether your own A setups actually beat your C setups. That one table is the point of the whole thing.</p>
+      <p>Your trades are saved in this browser, on this device. They are never uploaded anywhere and nobody else can see them. Clearing your browsing data erases them, so hit <strong>Export backup</strong> now and then and keep the file somewhere safe.</p>
+    </div>
+  </section>
 
   <!-- summary -->
   <section id="summary" aria-label="Performance summary">
@@ -434,6 +470,11 @@ tr:hover .rowbtns{opacity:1}
   </section>
 
 </main>
+
+<footer>
+  <p>Built by MalikTrades. Free to use and free to pass on.</p>
+  <p>Educational tool only. Nothing here is financial advice or a recommendation to trade, and past results are not a guide to future performance. Futures trading carries a substantial risk of loss.</p>
+</footer>
 
 <div class="toast" id="toast"></div>
 
@@ -751,6 +792,7 @@ function renderLog(){
   const list = forLog().slice().reverse();
   const t = $("logTable");
   $("emptyState").hidden = state.trades.length !== 0;
+  $("welcome").hidden = state.trades.length !== 0;
   $("logCount").textContent = list.length ? `${list.length} shown${selectedDay?" · "+prettyDate(selectedDay):""}` : "";
 
   if(!list.length){ t.innerHTML = ""; return; }
