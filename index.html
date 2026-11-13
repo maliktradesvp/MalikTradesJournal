@@ -233,6 +233,127 @@ dialog::backdrop{background:rgba(20,36,40,.6);backdrop-filter:blur(3px)}
 .q:first-of-type{border:0;padding-top:4px}
 .q label{display:block;font-weight:700;font-size:15px;margin-bottom:8px}
 
+/* advanced self review */
+.adv{margin-top:18px}
+.scorepill{display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,#21414A,#1A333A);color:#fff;border-radius:16px;padding:10px 18px 10px 12px}
+.scorepill b{width:62px;height:62px;border-radius:50%;border:3px solid var(--gold2);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:32px;color:var(--gold2)}
+.scorepill span{font-size:12.5px;color:#C3D1CE;line-height:1.3}.scorepill strong{font-size:20px;color:#fff}
+.advgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+.advh{font-family:var(--body);font-size:16px;font-weight:700;margin:0 0 12px}
+.advh small{font-weight:600;color:var(--mut);font-size:13px;margin-left:6px}
+.rule{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px}
+.dots,.gbtns{display:flex;gap:5px;flex:none}
+.dots button,.gbtns button{min-width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:13.5px;color:var(--teal2);cursor:pointer;padding:0 8px}
+.dots button[aria-pressed=true],.gbtns button[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.gc button[data-c=hit][aria-pressed=true]{background:var(--win);border-color:var(--win)}
+.gc button[data-c=miss][aria-pressed=true]{background:var(--loss);border-color:var(--loss)}
+.gc button[data-c=part][aria-pressed=true]{background:var(--gold);border-color:var(--gold)}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.dbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.dbox span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mut)}
+.dbox b{display:block;font-size:24px;font-variant-numeric:tabular-nums;margin-top:2px}
+.dbox small{display:block;font-size:12px;color:var(--mut)}
+.lab2{font-size:11px;letter-spacing:.14em;color:var(--mut);font-weight:700;text-transform:uppercase;margin:4px 0 8px}
+.glast{margin-bottom:16px}
+.grow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+.goalin{margin-bottom:8px}
+@media (max-width:1000px){ .advgrid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:600px){ .rule{flex-direction:column;align-items:flex-start} .grow{flex-direction:column;align-items:flex-start} .dots button,.gbtns button{min-width:40px} }
+
+.rvhead{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin:44px 0 4px;padding-top:30px;border-top:1px solid var(--line)}
+.rvs{margin-top:18px}
+.rvt{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.rvn{font-family:var(--display);font-weight:600;font-size:22px;color:#fff;background:var(--teal);border-radius:12px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;flex:none}
+.dgrid.six{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lfgrid{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:26px;align-items:start}
+.kql{font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.guide{margin:0;padding:0;list-style:none}
+.guide li{position:relative;padding:7px 0 7px 18px;border-top:1px solid var(--line);font-size:14.5px;color:var(--ink)}
+.guide li:first-child{border-top:0;padding-top:2px}
+.guide li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.guide li:first-child::before{top:10px}
+textarea.lf{font-size:15.5px;line-height:1.55;padding:12px 14px}
+textarea.lf.big{min-height:230px}
+.keyq{margin-top:18px;background:var(--soft);border-radius:14px;padding:16px 18px}
+.keyq label{display:block;font-family:var(--display);font-weight:600;font-size:22px;line-height:1.25;margin-bottom:10px;color:var(--ink)}
+.keyq textarea{background:#fff}
+.mist{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px;background:#fff}
+.mist textarea{border-color:var(--line);background:var(--card)}
+.mhead{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.mnum{font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--loss);border-radius:8px;padding:5px 9px;white-space:nowrap}
+.mhead input{font-weight:700}
+.mfoot{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.mfoot select{width:auto;min-width:240px;flex:1}
+.kindseg{display:flex;gap:6px;flex-wrap:wrap}
+.kindseg button{border:1px solid var(--line);background:#fff;border-radius:10px;min-height:40px;padding:0 13px;font-weight:700;font-size:13.5px;color:var(--teal2);cursor:pointer}
+.kindseg button[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.lastplan{background:var(--tealsoft);border-radius:14px;padding:14px 18px;margin-bottom:18px}
+.lp{display:grid;grid-template-columns:170px minmax(0,1fr);gap:12px;padding:6px 0;font-size:14.5px}
+.lp span{color:var(--mut);font-weight:700;font-size:13px}
+.lpq{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid rgba(33,65,74,.15);margin-top:8px;padding-top:10px;font-weight:700}
+.plangrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+.pf label{display:block;font-weight:700;font-size:14.5px;margin-bottom:7px}
+.pf:last-child{grid-column:1/-1}
+@media (max-width:1000px){ .lfgrid,.plangrid{grid-template-columns:minmax(0,1fr)} .dgrid.six{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:600px){ .lp{grid-template-columns:1fr;gap:2px} .mhead{flex-direction:column;align-items:stretch} .mfoot select{min-width:0} .keyq label{font-size:19px} }
+
+/* weekly page polish */
+.wkhero{background:radial-gradient(120% 140% at 100% 0%,#2F5A60 0%,#21414A 45%,#1A333A 100%);color:#fff;border-radius:24px;padding:22px 28px 26px;box-shadow:0 24px 50px -30px rgba(20,40,45,.7);position:relative;overflow:hidden}
+.wkhero::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(closest-side,rgba(226,194,122,.16),transparent);pointer-events:none}
+.wkh-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.wkh-nav,.wkh-act{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wkh-nav .sp{width:6px}
+.hbtn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#E9E2D3;font-weight:700;font-size:13.5px;border-radius:10px;padding:8px 13px;cursor:pointer;min-height:38px}
+.hbtn:hover{background:rgba(255,255,255,.15)}
+.hbtn:disabled{opacity:.35;cursor:default}
+.wkr{font-weight:700;font-size:14px;color:#C3D1CE;min-width:120px;text-align:center}
+.wks{font-size:12.5px;color:#9FB7B2}
+.wkh-main{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:22px;position:relative;z-index:1}
+.wkh-main h1{font-size:52px;line-height:1.02;margin:8px 0 10px;color:#fff}
+.wkh-main p{margin:0;color:#C3D1CE;max-width:560px;font-size:15px}
+.ring{display:flex;align-items:center;gap:14px;flex:none}
+.ring svg{display:block}
+.ring b{display:block;font-size:15px;color:#fff}.ring span{font-size:12.5px;color:#9FB7B2;line-height:1.35;display:block}
+.wkh-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px;position:relative;z-index:1}
+.hs{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:13px 16px;min-width:0}
+.hs .l{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9FB7B2;font-weight:700}
+.hs .v{font-size:24px;font-weight:700;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hs .v.pos{color:#8FD3A9}.hs .v.neg{color:#F0A497}.hs .v.gold{color:var(--gold2);font-size:30px}
+.hs .s{font-size:12.5px;color:#C3D1CE;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wknav{position:sticky;top:0;z-index:15;display:flex;gap:6px;overflow-x:auto;padding:12px 2px;margin:8px 0 0;background:linear-gradient(var(--paper) 78%,rgba(242,236,225,0));scrollbar-width:none}
+.wknav::-webkit-scrollbar{display:none}
+.wknav a{display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;color:var(--teal2);font-weight:700;font-size:13.5px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 8px;transition:border-color .15s}
+.wknav a:hover{border-color:#C9BCA5}
+.wknav a i{font-style:normal;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;background:var(--tealsoft);color:var(--teal)}
+.wknav a.done i{background:var(--win);color:#fff}
+.daycard{margin-top:6px}
+.dchart{display:grid;grid-template-columns:repeat(var(--nd,5),minmax(0,1fr));gap:10px;align-items:stretch}
+.dcol{display:flex;flex-direction:column;align-items:center;gap:6px}
+.dval{font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.dval.flat{color:var(--mut2)}
+.dplot{position:relative;width:100%;height:150px;background:repeating-linear-gradient(to top,transparent 0 29px,rgba(27,39,41,.05) 29px 30px);border-radius:10px}
+.dplot .zero{position:absolute;left:0;right:0;height:2px;background:rgba(27,39,41,.18)}
+.dplot .b{position:absolute;left:22%;right:22%;border-radius:8px;min-height:4px}
+.dplot .b.pos{background:linear-gradient(180deg,#3FA46C,#2E8B57)}
+.dplot .b.neg{background:linear-gradient(180deg,#B03A2E,#C9574A)}
+.dday{font-size:11.5px;letter-spacing:.14em;font-weight:700;color:var(--mut)}
+.dn2{font-size:11.5px;color:var(--mut2);font-weight:600;margin-top:-4px}
+.rvt{justify-content:flex-start}
+.rvt .stchip{margin-left:auto;font-size:12px;font-weight:700;border-radius:999px;padding:5px 11px;background:var(--tealsoft);color:var(--teal2);white-space:nowrap}
+.rvt .stchip.done{background:var(--winbg);color:var(--win)}
+.rvs{scroll-margin-top:70px}
+.rvs .card{position:relative;overflow:hidden}
+.rvs .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--line)}
+.rvs.done .card::before{background:var(--win)}
+.rvn{background:linear-gradient(160deg,#2F5A60,#1A333A)}
+.keyq{border-left:4px solid var(--gold);border-radius:4px 14px 14px 4px;position:relative}
+.keyq::before{content:"\201C";position:absolute;right:18px;top:-6px;font-family:var(--display);font-size:90px;line-height:1;color:rgba(180,137,58,.18)}
+.twrap{position:relative}
+.wc{position:absolute;right:12px;bottom:10px;font-size:11.5px;font-weight:600;color:var(--mut2);pointer-events:none;background:rgba(255,255,255,.85);padding:1px 6px;border-radius:6px}
+.twrap textarea{padding-bottom:28px}
+@media (max-width:1000px){ .wkh-stats{grid-template-columns:repeat(2,minmax(0,1fr))} .wkh-main{flex-direction:column;align-items:flex-start} }
+@media (max-width:600px){ .wkhero{padding:18px 16px 18px;border-radius:18px} .wkh-main h1{font-size:38px} .wkr{min-width:0} .dplot{height:110px} .dval{font-size:13px} .hs .v{font-size:20px} .hs .v.gold{font-size:24px} .hs .s{white-space:normal} }
+
 #printReport{display:none}
 @media print{
   @page{ margin:0; }
@@ -556,15 +677,19 @@ dialog::backdrop{background:rgba(20,36,40,.6);backdrop-filter:blur(3px)}
 
 <div id="weekView" hidden>
 <div class="wrap">
-  <div class="hd">
-    <div><div class="eyb">Weekly review</div><h1 id="wkTitle" style="font-size:46px">Week of</h1><p class="lede">Auto-built from your trades. Spend 5 minutes on it at the end of every week.</p></div>
-    <div class="btns">
-      <button class="btn sm" id="wkBack">← Journal</button>
-      <button class="btn sm" id="wkPrev">‹ Previous</button>
-      <button class="btn sm" id="wkNext">Next ›</button>
-      <button class="btn primary" id="wkPdf">Export PDF</button>
+  <div class="wkhero">
+    <div class="wkh-top">
+      <div class="wkh-nav"><button class="hbtn" id="wkBack">← Journal</button><span class="sp"></span><button class="hbtn" id="wkPrev" aria-label="Previous week">‹</button><span class="wkr" id="wkRange"></span><button class="hbtn" id="wkNext" aria-label="Next week">›</button></div>
+      <div class="wkh-act"><span class="wks" id="rvSaved"></span><button class="hbtn" id="wkPdf">Export PDF</button><button class="btn gold" id="rvCard">📸 Weekly card</button></div>
     </div>
+    <div class="wkh-main">
+      <div><div class="eyb" style="color:var(--gold2)">Weekly review</div><h1 id="wkTitle">Week of</h1>
+        <p>The numbers come from your journal. The rest is on you: write full answers, not one-word ones, and finish every section with its key question.</p></div>
+      <div class="ring" id="wkRing"></div>
+    </div>
+    <div class="wkh-stats" id="wkStats"></div>
   </div>
+  <nav class="wknav" id="wkNav" aria-label="Review sections"></nav>
   <div id="wkBody"></div>
 </div>
 </div>
@@ -579,12 +704,12 @@ dialog::backdrop{background:rgba(20,36,40,.6);backdrop-filter:blur(3px)}
   <div class="rcwrap">
     <div class="rcprev" id="rcPrev">Building your card…</div>
     <div>
-      <div class="eyb">Trade review card</div>
+      <div class="eyb" id="rcEyb">Trade review card</div>
       <h2 style="font-size:32px;margin:8px 0 10px">Ready to post</h2>
-      <p class="hint" style="font-size:14.5px;margin:0">Filled in from the trade you logged: market, direction, date, setup, stars, R, confluences, your notes and your first screenshot.</p>
+      <p class="hint" id="rcDesc" style="font-size:14.5px;margin:0">Filled in from the trade you logged: market, direction, date, setup, stars, R, confluences, your notes and your first screenshot.</p>
       <div class="field" style="margin:18px 0 16px"><label for="rcMember">Discord name</label><input type="text" id="rcMember" placeholder="@yourname" maxlength="32"></div>
       <div class="btns"><button class="btn primary" id="rcDl">⬇ Download PNG</button><button class="btn" id="rcCopy">Copy image</button></div>
-      <p class="hint" style="margin-top:14px">Then paste it straight into #trade-review.</p>
+      <p class="hint" id="rcWhere" style="margin-top:14px">Then paste it straight into #trade-review.</p>
     </div>
   </div>
 </dialog>
@@ -1347,7 +1472,7 @@ function saveTrade(){
 }
 
 /* ---------------- review card (canvas) ---------------- */
-let cardTradeId = null, cardBlob = null, cardUrl = null, bannerImg = null;
+let cardMode = "trade", cardTradeId = null, cardBlob = null, cardUrl = null, bannerImg = null;
 function loadImg(src){ return new Promise(res=>{ const im = new Image(); im.onload = ()=>res(im); im.onerror = ()=>res(null); im.src = src; }); }
 function rrect(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 function spaced(ctx, px){ if("letterSpacing" in ctx) ctx.letterSpacing = px+"px"; }
@@ -1468,22 +1593,27 @@ async function drawCard(t){
   return out;
 }
 async function renderCard(){
-  const t = state.trades.find(x=>x.id===cardTradeId); if(!t) return;
+  let cv;
   $("rcPrev").innerHTML = "Building your card…";
-  const cv = await drawCard(t);
+  if(cardMode==="week"){ cv = await drawWeekCard(wkStart); }
+  else { const t = state.trades.find(x=>x.id===cardTradeId); if(!t) return; cv = await drawCard(t); }
   cardBlob = await new Promise(res=>cv.toBlob(res, "image/png"));
   if(cardUrl) URL.revokeObjectURL(cardUrl);
   cardUrl = cardBlob ? URL.createObjectURL(cardBlob) : cv.toDataURL("image/png");
   $("rcPrev").innerHTML = `<img src="${cardUrl}" alt="Trade review card">`;
 }
 function openCard(id){
-  cardTradeId = id;
+  cardMode = "trade"; cardTradeId = id;
+  $("rcEyb").textContent = "Trade review card";
+  $("rcDesc").textContent = "Filled in from the trade you logged: market, direction, date, setup, stars, R, confluences, your notes and your first screenshot.";
+  $("rcWhere").textContent = "Then paste it straight into #trade-review.";
   $("rcMember").value = state.member || "";
   const dlg = $("rcDlg");
   if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
   renderCard();
 }
 function cardName(){
+  if(cardMode==="week") return `weekly-review-${wkStart}.png`;
   const t = state.trades.find(x=>x.id===cardTradeId);
   return t ? `trade-review-${t.date}-${t.sym.toLowerCase()}.png` : "trade-review.png";
 }
@@ -1533,42 +1663,66 @@ function weekData(start){
   }
   return {list, useR, s, bs, bss, leak:leaks[0]||null, days, hl, total:v(list)};
 }
+function dayChart(w){
+  const vals = w.days.filter(d=>d.ts.length).map(d=>d.v);
+  const pmax = Math.max(0, ...vals), nmax = Math.max(0, ...vals.map(v=>-v));
+  const span = (pmax + nmax) || 1, H = 100;
+  const zero = nmax ? (pmax/span)*H : H;
+  const zeroPct = Math.min(100, Math.max(0, zero));
+  return `<div class="dchart" style="--nd:${w.days.length}">${w.days.map(d=>{
+    const has = d.ts.length, v = d.v;
+    const h = has ? Math.abs(v)/span*H : 0;
+    const bar = !has || v===0 ? "" : (v>0 ? `<div class="b pos" style="bottom:${100-zeroPct}%;height:${Math.max(3,h)}%"></div>` : `<div class="b neg" style="top:${zeroPct}%;height:${Math.max(3,h)}%"></div>`);
+    return `<div class="dcol"><div class="dval ${has?cls(v):"flat"}">${has?fmtVal(v,w.useR):"—"}</div>
+      <div class="dplot"><div class="zero" style="top:calc(${zeroPct}% - 1px)"></div>${bar}</div>
+      <div class="dday">${DOW[d.dow].toUpperCase()}</div><div class="dn2">${has?d.ts.length+" trade"+(d.ts.length===1?"":"s"):"no trades"}</div></div>`;
+  }).join("")}</div>`;
+}
 function renderWeekly(){
   const w = weekData(wkStart);
   const end = addDays(wkStart, 6);
-  $("wkTitle").textContent = "Week of " + prettyDate(wkStart);
+  $("wkTitle").textContent = "Week of " + prettyDate(wkStart).replace(/ \d{4}$/,"");
+  $("wkRange").textContent = `${shortDate(wkStart)} – ${shortDate(addDays(wkStart,4))} ${end.slice(0,4)}`;
   $("wkNext").disabled = wkStart >= mondayOf(iso(new Date()));
-  const rv = state.reviews[wkStart] || {};
-  const tile = (lab, val, sub, c, lead) => `<div class="stat${lead?" lead":""}"><div class="label">${lab}</div><div class="value ${c||""}">${val}</div><div class="sub">${sub}</div></div>`;
-  let html = `<div class="wk4">
-    ${tile("Week result", w.list.length ? fmtVal(w.total, w.useR) : "—", w.list.length ? `${w.useR?money0(w.s.net)+" · ":""}${w.list.length} trade${w.list.length===1?"":"s"} · ${w.s.winRate.toFixed(0)}% won` : `${shortDate(wkStart)} – ${shortDate(end)}`, w.list.length?cls(w.total):"", true)}
-    ${tile("Best setup", w.bs ? escapeHtml(setupLabel(w.bs.k)) : "—", w.bs ? `${fmtVal(w.useR?w.bs.s.netR:w.bs.s.net,w.useR)} · ${w.bs.s.wins} of ${w.bs.s.n} won` : "Tag your setups to see this")}
-    ${tile("Best session", w.bss ? SESS[w.bss.k] : "—", w.bss ? `${fmtVal(w.useR?w.bss.s.netR:w.bss.s.net,w.useR)} · ${w.bss.s.n} trade${w.bss.s.n===1?"":"s"}` : "Add entry times to see this")}
-    ${tile("Biggest leak", w.leak ? escapeHtml(w.leak.m) : (w.list.length ? "None \u{1F389}" : "—"), w.leak ? `${w.leak.n} trade${w.leak.n===1?"":"s"} · ${fmtVal(w.leak.v,w.useR)}` : (w.list.length ? "No mistakes tagged" : ""), w.leak?"neg":"")}
-  </div>
-  <div class="g2">
-    <div class="card">
-      <div class="panel-head"><h2>Day by day</h2></div>
-      <div class="days" style="--nd:${w.days.length}">${w.days.map(d=>`<div class="${d.ts.length?cls(d.v):""}"><small>${DOW[d.dow].toUpperCase()}</small>${d.ts.length?fmtVal(d.v,w.useR):"—"}<em>${d.ts.length?d.ts.length+" trade"+(d.ts.length===1?"":"s"):"no trades"}</em></div>`).join("")}</div>
-      <div style="margin-top:16px">${w.hl.length ? w.hl.map(([i,t])=>`<div class="hl"><i>${i}</i><span>${t}</span></div>`).join("") : `<div class="hl"><i>\u{1F4ED}</i><span>No trades logged this week.</span></div>`}</div>
-    </div>
-    <div class="card">
-      <div class="panel-head"><h2>Reflect</h2></div>
-      <div class="q"><label for="rq1">1. What did I do well this week?</label><textarea id="rq1" placeholder="Write it here…">${escapeHtml(rv.good||"")}</textarea></div>
-      <div class="q"><label for="rq2">2. What's the one mistake I'll fix next week?</label><textarea id="rq2" placeholder="Write it here…">${escapeHtml(rv.fix||"")}</textarea></div>
-      <div class="q"><label for="rq3">3. What's my focus for next week?</label><textarea id="rq3" placeholder="Write it here…">${escapeHtml(rv.focus||"")}</textarea></div>
-      <div class="form-actions" style="margin-top:6px"><button class="btn primary" id="rqSave">Save review</button><span class="hint" id="rqHint">${rv.saved?"Saved "+rv.saved:""}</span></div>
+  rvDraft = JSON.parse(JSON.stringify(state.reviews[wkStart] || {}));
+  $("rvSaved").textContent = rvDraft.saved ? "Saved "+rvDraft.saved : "";
+  const hs = (l, v, s, c) => `<div class="hs"><div class="l">${l}</div><div class="v ${c||""}">${v}</div><div class="s">${s}</div></div>`;
+  $("wkStats").innerHTML =
+    hs("Week result", w.list.length ? fmtVal(w.total, w.useR) : "—", w.list.length ? `${w.useR?money0(w.s.net)+" · ":""}${w.list.length} trade${w.list.length===1?"":"s"} · ${w.s.winRate.toFixed(0)}% won` : "No trades logged", "gold") +
+    hs("Best setup", w.bs ? escapeHtml(setupLabel(w.bs.k)) : "—", w.bs ? `${fmtVal(w.useR?w.bs.s.netR:w.bs.s.net,w.useR)} · ${w.bs.s.wins} of ${w.bs.s.n} won` : "Tag your setups to see this") +
+    hs("Best session", w.bss ? SESS[w.bss.k] : "—", w.bss ? `${fmtVal(w.useR?w.bss.s.netR:w.bss.s.net,w.useR)} · ${w.bss.s.n} trade${w.bss.s.n===1?"":"s"}` : "Add entry times to see this") +
+    hs("Biggest leak", w.leak ? escapeHtml(w.leak.m) : (w.list.length ? "None \u{1F389}" : "—"), w.leak ? `${w.leak.n} trade${w.leak.n===1?"":"s"} · ${fmtVal(w.leak.v,w.useR)}` : (w.list.length ? "No mistakes tagged" : ""), w.leak?"neg":"");
+  let html = `<div class="card daycard">
+    <div class="panel-head"><h2>Day by day</h2></div>
+    <div class="advgrid">
+      <div>${dayChart(w)}</div>
+      <div>${w.hl.length ? w.hl.map(([i,t],k)=>`<div class="hl"${k?"":' style="border-top:0;padding-top:0"'}><i>${i}</i><span>${t}</span></div>`).join("") : `<div class="hl" style="border:0"><i>\u{1F4ED}</i><span>No trades logged this week.</span></div>`}</div>
     </div>
   </div>`;
+  html += reviewHtml(w);
   $("wkBody").innerHTML = html;
-  const store = (msg) => {
-    const good = $("rq1").value.trim(), fix = $("rq2").value.trim(), focus = $("rq3").value.trim();
-    if(!good && !fix && !focus){ delete state.reviews[wkStart]; }
-    else { const n = new Date(); state.reviews[wkStart] = {good, fix, focus, saved: n.getDate()+" "+MONTHS[n.getMonth()].slice(0,3)}; }
-    save(); if(msg){ $("rqHint").textContent = "Saved."; toast("Weekly review saved."); }
+  wireReview();
+  rvProgress();
+}
+const NAVN = {"01":"Numbers","02":"Execution","03":"Psychology","04":"Missed","05":"Mistakes","06":"Plan"};
+function sectionDone(){
+  const r = rvDraft || {}, has = v => typeof v==="string" && v.trim()!=="";
+  return {
+    "01": has(r.k1),
+    "02": has(r.s2) && has(r.k2),
+    "03": has(r.s3) && has(r.k3),
+    "04": has(r.s4) && has(r.k4),
+    "05": has(r.k5) && (r.m||[]).some(x=>x && (has(x.title)||has(x.text))),
+    "06": PLAN.filter(([k])=>has((r.plan||{})[k])).length >= 3
   };
-  let tmr; ["rq1","rq2","rq3"].forEach(id=>$(id).addEventListener("input", ()=>{ clearTimeout(tmr); tmr = setTimeout(()=>store(false), 600); }));
-  $("rqSave").onclick = () => store(true);
+}
+function rvProgress(){
+  const d = sectionDone(), n = Object.values(d).filter(Boolean).length;
+  $("wkNav").innerHTML = Object.keys(NAVN).map(k=>`<a href="#rv${k}" class="${d[k]?"done":""}" data-go="${k}"><i>${d[k]?"\u2713":k}</i>${NAVN[k]}</a>`).join("");
+  $("wkNav").querySelectorAll("a").forEach(x=>x.onclick = e => { e.preventDefault(); const el = $("rv"+x.dataset.go); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); });
+  Object.keys(d).forEach(k=>{ const s = $("rv"+k); if(!s) return; s.classList.toggle("done", d[k]); const c = s.querySelector(".stchip"); if(c){ c.textContent = d[k] ? "\u2713 Done" : "To do"; c.classList.toggle("done", d[k]); } });
+  const R = 30, C = 2*Math.PI*R, f = n/6;
+  $("wkRing").innerHTML = `<svg width="76" height="76" viewBox="0 0 76 76"><circle cx="38" cy="38" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="7"/><circle cx="38" cy="38" r="${R}" fill="none" stroke="#E2C27A" stroke-width="7" stroke-linecap="round" stroke-dasharray="${(C*f).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 38 38)"/><text x="38" y="44" text-anchor="middle" fill="#fff" font-size="18" font-weight="700" font-family="Source Sans 3, sans-serif">${n}/6</text></svg><div><b>${n===6?"Review complete":"Review progress"}</b><span>${n===6?"Make your card and post it.":`${6-n} section${6-n===1?"":"s"} to go`}</span></div>`;
 }
 function openWeekly(start){
   wkStart = start || wkStart || mondayOf(state.trades.length ? state.trades.map(t=>t.date).sort().pop() : iso(new Date()));
@@ -1580,6 +1734,298 @@ function closeWeekly(){
   $("weekView").hidden = true; $("mainView").hidden = false;
   history.replaceState(null, "", location.pathname + location.search);
   renderAll(); window.scrollTo(0,0);
+}
+
+/* ---------------- advanced weekly self review ---------------- */
+const STUDY = [
+  ["a01","Chart Setup"],["a02","Futures Cheat Sheet"],["a03","Volume Profile 101"],["a04","Profile Shapes"],
+  ["a05","Why the Setups Work"],["a06","VWAP and ATR"],["a07","Execution"],["a08","Putting It All Together"],
+  ["a09","The Prop Playbook"],["core","Core Setups (Playbook)"],["adv","Advanced Setups (Playbook)"],
+  ["boom","The Boom-and-Bust Cycle"],["zone","Trading in the Zone notes"]
+];
+const STUDYN = Object.fromEntries(STUDY);
+const SECTIONS = [
+  { n:"01", t:"Quantitative Performance", key:"k1", short:"Edge or luck?",
+    q:"Was my performance driven by a repeatable edge, or by a small number of favourable outcomes?",
+    guide:[] },
+  { n:"02", t:"Strategy Execution Audit", key:"k2", body:"s2", short:"Would I take them again?",
+    q:"If I replayed every trade without knowing the outcome, would I still take it?",
+    guide:["How many trades fully met my entry criteria?","Were any trades forced because I wanted to participate?","Did I execute my strategy consistently regardless of recent results?"] },
+  { n:"03", t:"Psychological Performance", key:"k3", body:"s3", short:"What cost me most?",
+    q:"Which psychological behaviour cost me the most this week?",
+    guide:["Did I experience FOMO, hesitation or revenge-trading urges?","Did my decision-making change after a win or loss?","Did I increase risk because I felt confident?","Did I follow my daily loss limits?","What emotional trigger caused my worst decision?"] },
+  { n:"04", t:"Missed Opportunities", key:"k4", body:"s4", short:"Selective or fearful?",
+    q:"Am I avoiding bad trades, or am I avoiding trading altogether?",
+    guide:["Which valid setups did I miss?","Why did I miss them?","Was it hesitation, distraction or a deliberate decision?","Did I incorrectly label a valid setup as invalid?","Am I becoming more selective or simply more fearful?"] },
+  { n:"05", t:"Mistake Analysis", key:"k5", short:"The mistake to eliminate",
+    q:"What is the single recurring mistake I need to eliminate?",
+    guide:["What happened?","What caused it?","Was it a strategy misunderstanding or an execution failure?","How can I prevent it from happening again?","Which academy lesson should I revisit?"] }
+];
+const PLAN = [
+  ["weak","One primary weakness to address","e.g. I enter before price confirms acceptance at the level"],
+  ["action","One specific action to improve it","e.g. Wait for a 1-minute close back inside value before entering"],
+  ["goal","One measurable process goal","e.g. 100% of trades logged with a setup, level and screenshot"],
+  ["rule","One rule I must follow","e.g. Two losses in a row and I'm done for the session"],
+  ["study","One concept I need to study","e.g. Acceptance vs rejection at the VAH and VAL"]
+];
+let rvDraft = null;
+
+function getPath(o, p){ return p.split(".").reduce((a,k)=>a==null?undefined:a[k], o); }
+function setPath(o, p, v){ const ks = p.split("."); let a = o; ks.slice(0,-1).forEach((k,i)=>{ if(a[k]==null) a[k] = /^\d+$/.test(ks[i+1]) ? [] : {}; a = a[k]; }); a[ks[ks.length-1]] = v; }
+function rvEmpty(r){
+  const has = (o, k) => k==="saved" ? false : (typeof o==="string" ? o.trim()!=="" : (o && typeof o==="object" ? Object.entries(o).some(([kk,v])=>has(v,kk)) : false));
+  return !has(r||{}, "");
+}
+function quant(list){
+  const rs = list.map(tradeR);
+  const useR = rs.some(r=>r!==null);
+  const v = t => useR ? (tradeR(t) ?? 0) : tradePnl(t);
+  const wins = list.filter(t=>tradePnl(t)>0), losses = list.filter(t=>tradePnl(t)<0);
+  const s = stats(list);
+  const avgW = wins.length ? wins.reduce((a,t)=>a+v(t),0)/wins.length : 0;
+  const avgL = losses.length ? losses.reduce((a,t)=>a+v(t),0)/losses.length : 0;
+  const net = useR ? s.netR : s.net;
+  const sorted = list.map(v).sort((a,b)=>b-a);
+  const top2 = sorted.slice(0,2).reduce((a,b)=>a+b,0);
+  const top2Share = net>0 && list.length>=4 ? Math.round(top2/net*100) : null;
+  const restNet = net - top2;
+  return {useR, n:list.length, w:wins.length, l:losses.length, be:list.length-wins.length-losses.length, winRate:s.winRate,
+    net, exp: list.length ? net/list.length : 0, avgW, avgL, dd: useR ? s.maxDdR : s.maxDd, top2Share, restNet,
+    greenDays: Object.values(s.days).filter(x=>x>0).length, days: Object.keys(s.days).length};
+}
+function edgeRead(q){
+  if(q.n<4) return "Too few trades this week to judge the edge. That's fine, just be honest about it below.";
+  if(q.net<=0) return `The week finished at ${fmtVal(q.net,q.useR)}. Look at whether the losses came from valid setups or from trades you shouldn't have taken.`;
+  if(q.top2Share!==null && q.top2Share>=80) return `Your 2 best trades made ${q.top2Share}% of the week. Without them you'd be at ${fmtVal(q.restNet,q.useR)}, so the result leaned on a few outcomes.`;
+  return `Your 2 best trades made ${q.top2Share ?? "—"}% of the week, and ${q.greenDays} of ${q.days} days were green. The result was spread across the week, which points to a repeatable edge.`;
+}
+function groupRows(list, dim, useR){
+  const gs = groups(list, dim).filter(g=>g.k).sort((a,b)=>(useR?b.s.netR-a.s.netR:b.s.net-a.s.net));
+  const order = {asia:0, london:1, ny:2};
+  if(dim==="session") gs.sort((a,b)=>order[a.k]-order[b.k]);
+  if(!gs.length) return `<div class="empty-note">${dim==="session"?"Add entry times to your trades to see this.":"Tag your trades with a setup to see this."}</div>`;
+  return `<div class="table-scroll"><table class="brk"><thead><tr><th>${dim==="session"?"Session (NY time)":"Setup"}</th><th class="r">Trades</th><th>Win rate</th><th class="r">Net</th><th class="r">Per trade</th></tr></thead><tbody>${
+    gs.map(g=>{ const v = useR?g.s.netR:g.s.net; return `<tr><td class="nm">${dim==="session"?SESS[g.k]+` <span class="sm" style="display:inline">${{asia:"7pm–2am",london:"2–9:30am",ny:"9:30am–7pm"}[g.k]}</span>`:setupLabel(g.k)}</td><td class="r">${g.s.n}</td>
+      <td><div class="wr"><span class="bar"><i class="${v<0?"neg":""}" style="width:${g.s.winRate.toFixed(0)}%"></i></span><b class="num" style="min-width:40px;text-align:right">${g.s.winRate.toFixed(0)}%</b></div></td>
+      <td class="r ${cls(v)}">${fmtVal(v,useR)}</td><td class="r">${useR?fmtR(g.s.expR,2):money0(g.s.expectancy)}</td></tr>`; }).join("")}</tbody></table></div>`;
+}
+const words = s => (String(s||"").trim().match(/\S+/g)||[]).length;
+const wcTxt = s => { const n = words(s); return n+" word"+(n===1?"":"s"); };
+const ta = (path, ph, rows, big) => `<div class="twrap"><textarea class="lf${big?" big":""}" data-p="${path}" rows="${rows||5}" placeholder="${escapeHtml(ph||"Write it out in full…")}">${escapeHtml(getPath(rvDraft, path)||"")}</textarea><span class="wc">${wcTxt(getPath(rvDraft, path))}</span></div>`;
+const keyQ = (s) => `<div class="keyq"><div class="kql">Key question</div><label for="kq${s.n}">${s.q}</label><div class="twrap"><textarea id="kq${s.n}" class="lf" data-p="${s.key}" rows="3" placeholder="Answer it honestly in a few sentences…">${escapeHtml(rvDraft[s.key]||"")}</textarea><span class="wc">${wcTxt(rvDraft[s.key])}</span></div></div>`;
+const guideList = (s) => `<ul class="guide">${s.guide.map(g=>`<li>${g}</li>`).join("")}</ul>`;
+
+function reviewHtml(w){
+  const q = quant(w.list);
+  const S = SECTIONS;
+  const box = (l, v, s, c) => `<div class="dbox"><span>${l}</span><b class="${c||""}">${v}</b><small>${s}</small></div>`;
+  const prevPlan = (state.reviews[addDays(wkStart,-7)]||{}).plan || {};
+  const hasPrev = PLAN.some(([k])=>prevPlan[k]);
+  const lessonSel = (i) => `<select data-p="m.${i}.lesson"><option value="">Lesson to revisit…</option>${STUDY.map(([k,n])=>`<option value="${k}"${getPath(rvDraft,`m.${i}.lesson`)===k?" selected":""}>${n}</option>`).join("")}</select>`;
+  const kind = (i) => `<div class="kindseg" data-kind="${i}">${[["strategy","Strategy misunderstanding"],["execution","Execution failure"]].map(([k,l])=>`<button type="button" data-v="${k}" aria-pressed="${String(getPath(rvDraft,`m.${i}.kind`)===k)}">${l}</button>`).join("")}</div>`;
+  return `
+  <section class="rvs" id="rv01"><div class="card">
+    <div class="rvt"><span class="rvn">${S[0].n}</span><h2>${S[0].t}</h2><span class="stchip">To do</span></div>
+    ${q.n ? `<div class="dgrid six">
+      ${box("Trades", q.n, `${q.w} won · ${q.l} lost${q.be?` · ${q.be} BE`:""}`)}
+      ${box("Net "+(q.useR?"R":"P&L"), fmtVal(q.net,q.useR), `${q.winRate.toFixed(0)}% win rate`, cls(q.net))}
+      ${box("Expectancy", q.useR?fmtR(q.exp,2):money0(q.exp), "per trade", cls(q.exp))}
+      ${box("Avg win vs loss", `${q.useR?fmtR(q.avgW,2):money0(q.avgW)} / ${q.useR?fmtR(q.avgL,2):money0(q.avgL)}`, q.avgL ? `${Math.abs(q.avgW/q.avgL).toFixed(2)} : 1` : "no losses")}
+      ${box("Max drawdown", q.useR?fmtR(q.dd):money0(q.dd), "peak to trough", q.dd<0?"neg":"")}
+      ${box("Top 2 trades", q.top2Share!==null ? q.top2Share+"%" : "—", "share of the week's result")}
+    </div>
+    <div class="ins" style="margin-top:12px"><span>\u{1F4A1}</span><span>${edgeRead(q)}</span></div>
+    <div class="advgrid" style="margin-top:18px"><div><h3 class="advh">By NY session timing</h3>${groupRows(w.list,"session",q.useR)}</div><div><h3 class="advh">By setup type</h3>${groupRows(w.list,"setup",q.useR)}</div></div>`
+    : `<div class="empty-note">No trades logged this week, so there's nothing to measure. Log your trades and this fills in on its own.</div>`}
+    ${keyQ(S[0])}
+  </div></section>
+
+  ${S.slice(1,4).map(s=>`<section class="rvs" id="rv${s.n}"><div class="card">
+    <div class="rvt"><span class="rvn">${s.n}</span><h2>${s.t}</h2><span class="stchip">To do</span></div>
+    <div class="lfgrid"><div><div class="kql">Think about</div>${guideList(s)}${s.n==="02" && q.n ? `<p class="hint" style="margin-top:10px">Your journal: ${w.list.filter(t=>!(t.mistakes||[]).length).length} of ${q.n} trades had no mistakes tagged, and ${w.list.filter(t=>t.grade>=3).length} were rated 3 stars or more.</p>` : ""}${s.n==="03" && q.n ? (()=>{ const d = discipline(w.list); return d ? `<p class="hint" style="margin-top:10px">Your journal: you won ${d.aw.n?Math.round(d.aw.w/d.aw.n*100)+"%":"—"} of trades after a win and ${d.al.n?Math.round(d.al.w/d.al.n*100)+"%":"—"} after a loss. Most trades in a day: ${d.maxDay}.</p>` : ""; })() : ""}</div>
+      <div>${ta(s.body, "Write your answer in full. Use real examples from this week's trades.", 9, true)}</div></div>
+    ${keyQ(s)}
+  </div></section>`).join("")}
+
+  <section class="rvs" id="rv05"><div class="card">
+    <div class="rvt"><span class="rvn">05</span><h2>${S[4].t}</h2><span class="stchip">To do</span></div>
+    <p class="hint" style="margin:-4px 0 14px;font-size:14px">Your three most significant mistakes this week. For each one, write what happened, what caused it, and how you'll prevent it from happening again. Then mark whether it was a strategy misunderstanding or an execution failure, and pick the lesson to revisit.</p>
+    ${[0,1,2].map(i=>`<div class="mist">
+      <div class="mhead"><span class="mnum">Mistake ${i+1}</span><input type="text" data-p="m.${i}.title" maxlength="90" placeholder="${["e.g. Chased the NQ short at ONVAL","e.g. Took a Snap with no confluence","e.g. Moved my stop on the GC Flip"][i]}" value="${escapeHtml(getPath(rvDraft,`m.${i}.title`)||"")}"></div>
+      ${ta(`m.${i}.text`, "What happened, what caused it, and how you'll stop it happening again…", 5)}
+      <div class="mfoot">${kind(i)}${lessonSel(i)}</div>
+    </div>`).join("")}
+    ${keyQ(S[4])}
+  </div></section>
+
+  <section class="rvs" id="rv06"><div class="card">
+    <div class="rvt"><span class="rvn">06</span><h2>Next Week's Improvement Plan</h2><span class="stchip">To do</span></div>
+    ${hasPrev ? `<div class="lastplan"><div class="kql">Last week's plan</div>${PLAN.filter(([k])=>prevPlan[k]).map(([k,l])=>`<div class="lp"><span>${l.replace("One ","").replace(/^\w/,c=>c.toUpperCase())}</span><b>${escapeHtml(prevPlan[k])}</b></div>`).join("")}
+      <div class="lpq"><span>Did I stick to it?</span><div class="gbtns gc" id="planChk">${GOALCHK.map(([k,l])=>`<button type="button" data-c="${k}" aria-pressed="${String(rvDraft.planCheck===k)}">${l}</button>`).join("")}</div></div></div>` : ""}
+    <div class="plangrid">${PLAN.map(([k,l,ph])=>`<div class="pf"><label for="pl_${k}">${l}</label><textarea id="pl_${k}" class="lf" data-p="plan.${k}" rows="2" placeholder="${escapeHtml(ph)}">${escapeHtml(getPath(rvDraft,"plan."+k)||"")}</textarea></div>`).join("")}</div>
+    <div class="form-actions" style="margin-top:18px"><button class="btn primary" id="rvSave">Save review</button><button class="btn gold" id="rvCard2">\u{1F4F8} Weekly card</button><span class="hint">Everything saves as you go. Post the card in the Discord to stay accountable.</span></div>
+  </div></section>`;
+}
+function wireReview(){
+  const body = $("wkBody");
+  const store = (msg) => {
+    if(rvEmpty(rvDraft)) delete state.reviews[wkStart];
+    else { const n = new Date(); rvDraft.saved = n.getDate()+" "+MONTHS[n.getMonth()].slice(0,3); state.reviews[wkStart] = rvDraft; }
+    save();
+    $("rvSaved").textContent = rvDraft.saved ? "Saved "+rvDraft.saved : "";
+    if(msg) toast("Weekly review saved.");
+  };
+  let tmr;
+  body.querySelectorAll("[data-p]").forEach(el=>{
+    const ev = el.tagName==="SELECT" ? "change" : "input";
+    el.addEventListener(ev, ()=>{
+      setPath(rvDraft, el.dataset.p, el.value);
+      const wc = el.nextElementSibling; if(wc && wc.classList.contains("wc")) wc.textContent = wcTxt(el.value);
+      clearTimeout(tmr); tmr = setTimeout(()=>{ store(false); rvProgress(); }, 400);
+    });
+  });
+  body.querySelectorAll("[data-kind]").forEach(g=>g.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    const p = `m.${g.dataset.kind}.kind`, cur = getPath(rvDraft,p);
+    setPath(rvDraft, p, cur===b.dataset.v ? "" : b.dataset.v);
+    g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.v===getPath(rvDraft,p))));
+    store(false);
+  }));
+  const pc = $("planChk");
+  if(pc) pc.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    rvDraft.planCheck = rvDraft.planCheck===b.dataset.c ? "" : b.dataset.c;
+    pc.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.c===rvDraft.planCheck)));
+    store(false);
+  });
+  $("rvSave").onclick = () => store(true);
+  $("rvCard").onclick = $("rvCard2").onclick = () => { store(false); openWeekCard(); };
+  $("rvSave").addEventListener("click", rvProgress);
+}
+const GOALCHK = [["hit","Yes"],["part","Partly"],["miss","No"]];
+function discipline(list){
+  if(!list.length) return null;
+  const perDay = {}; list.forEach(t=>{ perDay[t.date]=(perDay[t.date]||0)+1; });
+  const aw = {n:0,w:0}, al = {n:0,w:0};
+  for(let i=1;i<list.length;i++){
+    const prev = tradePnl(list[i-1]), win = tradePnl(list[i])>0;
+    if(prev>0){ aw.n++; if(win) aw.w++; } else if(prev<0){ al.n++; if(win) al.w++; }
+  }
+  return {maxDay:Math.max(...Object.values(perDay)), aw, al};
+}
+
+/* weekly card */
+async function drawWeekCard(start){
+  const SANS = '"Source Sans 3", system-ui, sans-serif', SERIF = '"Cormorant Garamond", Georgia, serif';
+  try{ await Promise.all(['700 20px "Source Sans 3"','400 20px "Source Sans 3"','600 40px "Cormorant Garamond"'].map(f=>document.fonts.load(f))); }catch(e){}
+  if(!bannerImg) bannerImg = await loadImg("banner.jpg");
+  const w = weekData(start), rv = state.reviews[start] || {}, q = quant(w.list);
+  const W = 1080, P = 56, CW = W-2*P;
+  const c = document.createElement("canvas"); c.width = W; c.height = 6000;
+  const x = c.getContext("2d");
+  const bg = x.createLinearGradient(0,0,0,c.height); bg.addColorStop(0,"#2B5660"); bg.addColorStop(1,"#1F4248");
+  x.fillStyle = bg; x.fillRect(0,0,W,c.height);
+  const BH = 300;
+  if(bannerImg){ const s = Math.max(W/bannerImg.width, BH/bannerImg.height), sw = W/s, sh = BH/s; x.drawImage(bannerImg, (bannerImg.width-sw)/2, (bannerImg.height-sh)/2, sw, sh, 0, 0, W, BH); }
+  else { x.fillStyle="#3F6F74"; x.fillRect(0,0,W,BH); }
+  x.fillStyle = "#F3EBDB"; x.font = `700 17px ${SANS}`; spaced(x,3); x.textAlign = "right"; x.fillText("WEEKLY REVIEW", W-P, 48); x.textAlign = "left"; spaced(x,0);
+  const lab = (txt, cx, cy, col) => { x.fillStyle = col||"#A9C0BC"; x.font = `700 15px ${SANS}`; spaced(x,2.5); x.fillText(txt, cx, cy); spaced(x,0); };
+  let y = BH; const colW = CW/4;
+  ["MEMBER","WEEK","TRADES","RESULT"].forEach((l,i)=>lab(l, P+i*colW, y+50));
+  x.fillStyle = "#fff"; x.font = `600 30px ${SANS}`;
+  let mem = (state.member||"").trim() || "—"; while(x.measureText(mem).width > colW-16 && mem.length>2) mem = mem.slice(0,-2)+"…";
+  x.fillText(mem, P, y+96);
+  x.fillText(`${shortDate(start)} – ${shortDate(addDays(start,4))}`, P+colW, y+96);
+  x.fillText(q.n ? `${q.n}  (${q.w}W · ${q.l}L)` : "0", P+2*colW, y+96);
+  x.font = `600 40px ${SERIF}`; x.fillStyle = q.net>0 ? "#8FD3A9" : (q.net<0 ? "#F0A497" : "#fff");
+  x.fillText(q.n ? fmtVal(q.net, q.useR) : "—", P+3*colW, y+98);
+  y += 132; x.fillStyle = "rgba(255,255,255,.13)"; x.fillRect(P, y, CW, 2);
+  y += 34;
+  // 01 numbers
+  lab("01 · QUANTITATIVE PERFORMANCE", P, y); y += 20;
+  const items = [
+    ["Expectancy", q.n ? (q.useR?fmtR(q.exp,2):money0(q.exp)) : "—", q.exp],
+    ["Win rate", q.n ? q.winRate.toFixed(0)+"%" : "—", 0],
+    ["Avg win / loss", q.n ? `${q.useR?fmtR(q.avgW,1):money0(q.avgW)} / ${q.useR?fmtR(q.avgL,1):money0(q.avgL)}` : "—", 0],
+    ["Max drawdown", q.n ? (q.useR?fmtR(q.dd):money0(q.dd)) : "—", q.dd]
+  ];
+  const iw = (CW-12)/2;
+  items.forEach(([l,v,sg],i)=>{
+    const bx = P + (i%2)*(iw+12), by = y + Math.floor(i/2)*(108+12);
+    x.fillStyle = "#1D3A40"; rrect(x, bx, by, iw, 108, 16); x.fill();
+    x.fillStyle = "#A9C0BC"; x.font = `600 16px ${SANS}`; x.fillText(l, bx+24, by+38);
+    x.fillStyle = sg>0 ? "#8FD3A9" : (sg<0 ? "#F0A497" : "#fff"); x.font = `700 32px ${SANS}`;
+    let vv = String(v); while(x.measureText(vv).width > iw-44 && vv.length>3) vv = vv.slice(0,-2)+"…";
+    x.fillText(vv, bx+24, by+84);
+  });
+  y += 2*108 + 12 + 30;
+  // day by day
+  const dw = (CW - (w.days.length-1)*12)/w.days.length;
+  w.days.forEach((dd,i)=>{
+    const has = dd.ts.length, pos = dd.v>0, neg = dd.v<0, bx = P + i*(dw+12);
+    x.fillStyle = !has ? "rgba(255,255,255,.07)" : (pos ? "rgba(143,211,169,.2)" : (neg ? "rgba(240,164,151,.2)" : "rgba(255,255,255,.1)"));
+    rrect(x, bx, y, dw, 90, 14); x.fill();
+    x.textAlign = "center";
+    x.fillStyle = "#A9C0BC"; x.font = `700 14px ${SANS}`; spaced(x,2); x.fillText(DOW[dd.dow].toUpperCase(), bx+dw/2, y+32); spaced(x,0);
+    x.fillStyle = !has ? "#7F9A96" : (pos ? "#8FD3A9" : (neg ? "#F0A497" : "#fff")); x.font = `700 25px ${SANS}`;
+    x.fillText(has ? fmtVal(dd.v, q.useR) : "—", bx+dw/2, y+68);
+    x.textAlign = "left";
+  });
+  y += 90 + 40;
+  // key answers
+  const keys = SECTIONS.filter(s=>s.n!=="01").map(s=>[s.n, s.short, rv[s.key]]).filter(k=>k[2]);
+  const mist = (rv.m||[]).map((m,i)=>m && m.title ? `${i+1}. ${m.title}${m.kind?` (${m.kind==="strategy"?"strategy":"execution"})`:""}` : "").filter(Boolean);
+  if(keys.length || mist.length){
+    x.font = `400 23px ${SANS}`;
+    const parts = keys.map(([n,s,t])=>{ let ls = wrapLines(x, t, CW-64); if(ls.length>4){ ls = ls.slice(0,4); ls[3] = ls[3].replace(/\s*\S*$/,"")+"…"; } return [`${n} · ${s.toUpperCase()}`, ls]; });
+    if(mist.length) parts.push(["TOP MISTAKES", mist.flatMap(m=>wrapLines(x, m, CW-64)).slice(0,6)]);
+    const H2 = 30 + parts.reduce((a,[,ls])=>a + 38 + ls.length*32 + 20, 0);
+    x.fillStyle = "#F3EBDB"; rrect(x, P, y, CW, H2, 18); x.fill();
+    let yy = y + 30;
+    parts.forEach(([l, ls])=>{
+      x.fillStyle = "#7A7060"; x.font = `700 13px ${SANS}`; spaced(x,3); x.fillText(l, P+32, yy+14); spaced(x,0);
+      x.fillStyle = "#24474E"; x.font = `400 23px ${SANS}`;
+      ls.forEach((ln,i)=>x.fillText(ln, P+32, yy+48+i*32));
+      yy += 38 + ls.length*32 + 20;
+    });
+    y += H2 + 36;
+  }
+  // plan
+  const plan = rv.plan || {};
+  const pl = PLAN.filter(([k])=>plan[k]);
+  if(pl.length){
+    lab("06 · NEXT WEEK'S IMPROVEMENT PLAN", P, y); y += 20;
+    const names = {weak:"Weakness", action:"Action", goal:"Process goal", rule:"Rule", study:"Study"};
+    x.font = `600 22px ${SANS}`;
+    const rows = pl.map(([k])=>{ let ls = wrapLines(x, plan[k], CW-260); if(ls.length>2){ ls = ls.slice(0,2); ls[1] += "…"; } return [names[k], ls]; });
+    const PH = 24 + rows.reduce((a,[,ls])=>a + ls.length*32 + 26, 0);
+    x.fillStyle = "#1D3A40"; rrect(x, P, y, CW, PH, 18); x.fill();
+    x.strokeStyle = "rgba(255,255,255,.14)"; x.lineWidth = 2; rrect(x, P+1, y+1, CW-2, PH-2, 17); x.stroke();
+    let yy = y + 24;
+    rows.forEach(([n, ls], i)=>{
+      if(i){ x.fillStyle = "rgba(255,255,255,.1)"; x.fillRect(P+28, yy-13, CW-56, 1); }
+      x.fillStyle = "#E2C27A"; x.font = `700 16px ${SANS}`; spaced(x,1.5); x.fillText(n.toUpperCase(), P+28, yy+22); spaced(x,0);
+      x.fillStyle = "#fff"; x.font = `600 22px ${SANS}`;
+      ls.forEach((ln,j)=>x.fillText(ln, P+220, yy+22+j*32));
+      yy += ls.length*32 + 26;
+    });
+    y += PH + 40;
+  }
+  x.fillStyle = "#1D3A40"; x.fillRect(0, y, W, 96);
+  x.fillStyle = "#A9C0BC"; x.font = `700 14px ${SANS}`; spaced(x,3); x.fillText("MALIK'S AUCTION HOUSE · WEEKLY REVIEW", P, y+55); spaced(x,0);
+  x.fillStyle = "#fff"; x.font = `600 32px ${SERIF}`; x.textAlign = "right"; x.fillText("MalikTrades", W-P, y+58); x.textAlign = "left";
+  const H = y + 96;
+  const out = document.createElement("canvas"); out.width = W; out.height = H;
+  out.getContext("2d").drawImage(c, 0, 0);
+  return out;
+}
+function openWeekCard(){
+  cardMode = "week";
+  $("rcMember").value = state.member || "";
+  $("rcEyb").textContent = "Weekly review card";
+  $("rcDesc").textContent = "Built from this week's numbers and your review: the stats, day by day, your answers to the key questions, your top mistakes and next week's plan.";
+  $("rcWhere").textContent = "Post it in the Discord so the group keeps you accountable.";
+  const dlg = $("rcDlg");
+  if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
+  renderCard();
 }
 
 /* ---------------- PDF reports ---------------- */
@@ -1666,23 +2112,26 @@ function buildReport(){
     <div class="pr-foot">Produced by the MalikTrades Journal. Educational record only. Not financial advice, and past results are not a guide to future performance.</div>`;
 }
 function buildWeeklyReport(){
-  const w = weekData(wkStart), rv = state.reviews[wkStart] || {};
+  const w = weekData(wkStart), rv = state.reviews[wkStart] || {}, q = quant(w.list);
   const pc = v => v>0?"pr-pos":(v<0?"pr-neg":"");
   const tiles = [
-    ["Week result", w.list.length?fmtVal(w.total,w.useR):"—", `${w.list.length} trades`, pc(w.total)],
-    ["Best setup", w.bs?escapeHtml(SETUP[w.bs.k].name):"—", w.bs?fmtVal(w.useR?w.bs.s.netR:w.bs.s.net,w.useR):"", ""],
-    ["Best session", w.bss?SESS[w.bss.k]:"—", w.bss?fmtVal(w.useR?w.bss.s.netR:w.bss.s.net,w.useR):"", ""],
-    ["Biggest leak", w.leak?escapeHtml(w.leak.m):"None", w.leak?fmtVal(w.leak.v,w.useR):"", w.leak?"pr-neg":""]
+    ["Week result", q.n?fmtVal(q.net,q.useR):"—", `${q.n} trades · ${q.w}W ${q.l}L`, pc(q.net)],
+    ["Expectancy", q.n?(q.useR?fmtR(q.exp,2):money0(q.exp)):"—", "per trade", pc(q.exp)],
+    ["Avg win / loss", q.n?`${q.useR?fmtR(q.avgW,2):money0(q.avgW)} / ${q.useR?fmtR(q.avgL,2):money0(q.avgL)}`:"—", "", ""],
+    ["Max drawdown", q.n?(q.useR?fmtR(q.dd):money0(q.dd)):"—", q.top2Share!==null?`top 2 trades = ${q.top2Share}% of week`:"", ""]
   ].map(([l,v,s,c])=>`<div class="pr-stat"><div class="l">${l}</div><div class="v ${c}">${v}</div><div class="s">${s}</div></div>`).join("");
   const days = `<table class="pr"><thead><tr><th>Day</th><th class="r">Trades</th><th class="r">Result</th></tr></thead><tbody>${w.days.map(d=>`<tr><td>${DOW_LONG[d.dow]} ${shortDate(d.k)}</td><td class="r">${d.ts.length}</td><td class="r ${pc(d.v)}">${d.ts.length?fmtVal(d.v,w.useR):"—"}</td></tr>`).join("")}</tbody></table>`;
-  const hl = w.hl.map(([i,t])=>`<p class="pr-ref">${i} ${t.replace(/<\/?b>/g,"")}</p>`).join("");
-  const ref = [["What I did well", rv.good],["The one mistake I'll fix", rv.fix],["My focus for next week", rv.focus]].map(([q,a])=>`<p class="pr-ref"><b>${q}</b>${a?escapeHtml(a):"—"}</p>`).join("");
+  const gt = (dim, title) => { const gs = groups(w.list, dim).filter(g=>g.k); if(!gs.length) return "";
+    return `<table class="pr"><thead><tr><th>${title}</th><th class="r">Trades</th><th class="r">Win rate</th><th class="r">Net</th></tr></thead><tbody>${gs.map(g=>`<tr><td>${escapeHtml(groupName(g.k,dim))}</td><td class="r">${g.s.n}</td><td class="r">${g.s.winRate.toFixed(0)}%</td><td class="r ${pc(q.useR?g.s.netR:g.s.net)}">${fmtVal(q.useR?g.s.netR:g.s.net,q.useR)}</td></tr>`).join("")}</tbody></table>`; };
+  const para = (label, text) => text ? `<p class="pr-ref"><b>${label}</b>${escapeHtml(text).replace(/\n/g,"<br>")}</p>` : "";
+  const sec = (s) => `<h2 class="pr-sec">${s.n} · ${s.t}</h2>${s.body?para("My answer", rv[s.body]):""}${s.n==="05" ? (rv.m||[]).map((m,i)=>m&&(m.title||m.text)?para(`Mistake ${i+1}${m.title?": "+m.title:""}${m.kind?` · ${m.kind==="strategy"?"strategy misunderstanding":"execution failure"}`:""}${m.lesson?` · revisit ${STUDYN[m.lesson]}`:""}`, m.text||"—"):"").join("") : ""}${para("Key question: "+s.q, rv[s.key])}`;
+  const plan = rv.plan || {};
   return `<div class="pr-banner"><img src="${bannerUrl()}" alt=""></div>
-    <div class="pr-head"><h1>Weekly review · ${prettyDate(wkStart)}</h1><div class="pr-scope">${prettyDate(wkStart)} – ${prettyDate(addDays(wkStart,6))}</div></div>
+    <div class="pr-head"><h1>Weekly review · ${prettyDate(wkStart)}</h1><div class="pr-scope">${prettyDate(wkStart)} – ${prettyDate(addDays(wkStart,6))}${state.member?"<br>"+escapeHtml(state.member):""}</div></div>
     <div class="pr-stats four">${tiles}</div>
-    <h2 class="pr-sec">Day by day</h2>${days}
-    ${hl?`<h2 class="pr-sec">Highlights</h2>${hl}`:""}
-    <h2 class="pr-sec">Reflection</h2>${ref}
+    <h2 class="pr-sec">Day by day</h2>${days}${gt("session","Session (NY time)")}${gt("setup","Setup")}
+    ${SECTIONS.map(sec).join("")}
+    <h2 class="pr-sec">06 · Next week's improvement plan</h2>${PLAN.map(([k,l])=>para(l, plan[k])).join("") || '<p class="pr-ref">—</p>'}
     <div class="pr-foot">Produced by the MalikTrades Journal. Educational record only.</div>`;
 }
 function printHtml(html, msg){
