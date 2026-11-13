@@ -576,7 +576,6 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
           <h2>Where your edge is</h2><span class="spacer"></span>
           <div class="seg" id="edgeTabs">
             <button type="button" data-k="setup" aria-pressed="true">Setup</button>
-            <button type="button" data-k="level" aria-pressed="false">Level</button>
             <button type="button" data-k="session" aria-pressed="false">Session</button>
             <button type="button" data-k="sym" aria-pressed="false">Market</button>
           </div>
@@ -676,7 +675,6 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
         <div class="field"><label for="fFees">Fees</label><input type="number" id="fFees" step="0.01" placeholder="0.00"></div>
         <div class="field half"><span class="lab">Result in R</span><div class="rbox" id="rBox"><b>—</b><span>Add your stop size and P&amp;L to see the result in R.</span></div></div>
 
-        <div class="field full"><span class="lab">Level traded</span><div class="chips" id="levelChips"></div></div>
         <div class="field full"><span class="lab">Confluences at the level · <span id="confCount">0 selected</span></span><div class="cgroups" id="chips"></div></div>
         <div class="field full"><span class="lab">Mistakes · leave empty if you followed the plan</span><div class="chips" id="mistakeChips"></div></div>
 
@@ -698,13 +696,6 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
         <button class="btn" id="btnCancel" hidden>Cancel edit</button>
         <span class="hint" id="calcHint"></span>
       </div>
-    </div>
-  </section>
-
-  <section id="secRatings">
-    <div class="card">
-      <div class="panel-head"><h2>Do the star ratings hold up?</h2></div>
-      <div class="table-scroll"><table class="grades" id="gradeTable"></table></div>
     </div>
   </section>
 
@@ -1376,12 +1367,6 @@ function chip(label, cls2){ const b = document.createElement("button"); b.type="
 function buildChips(){
   const sc = $("setupChips"); sc.innerHTML = "";
   SETUPS.forEach(s=>{ const b = chip(s.e+" "+s.name, "big"); b.dataset.v = s.id; b.onclick = () => { formSetup = formSetup===s.id ? null : s.id; syncChips(); }; sc.appendChild(b); });
-  const lc = $("levelChips"); lc.innerHTML = "";
-  LEVELS.forEach(l=>{ const b = chip(l); b.dataset.v = l; b.onclick = () => {
-    formLevel = formLevel===l ? null : l;
-    if(formLevel) activeConfluences.add(l);
-    syncChips(); refreshGradeBadge();
-  }; lc.appendChild(b); });
   const box = $("chips"); box.innerHTML = "";
   CGROUPS.forEach(([g, cs])=>{
     const wrap = document.createElement("div"); wrap.className = "cg";
@@ -1398,7 +1383,6 @@ function buildChips(){
 }
 function syncChips(){
   $("setupChips").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.v===formSetup)));
-  $("levelChips").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.v===formLevel)));
   $("chips").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", String(activeConfluences.has(b.dataset.v))));
   $("mistakeChips").querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed", String(formMistakes.has(b.dataset.v))));
 }
@@ -2236,7 +2220,7 @@ function importJson(file){
 
 
 /* ---------------- journal home hero + latest trades ---------------- */
-const JNAV = [["secEdge","Edge"],["secCurve","Equity curve"],["secCal","Calendar"],["logForm","Log a trade"],["secRatings","Ratings"],["secLog","Trade log"]];
+const JNAV = [["secEdge","Edge"],["secCurve","Equity curve"],["secCal","Calendar"],["logForm","Log a trade"],["secLog","Trade log"]];
 function renderHome(){
   const today = iso(new Date()), mon = mondayOf(today);
   const wk = state.trades.filter(t=>t.date>=mon && t.date<=today);
@@ -2345,7 +2329,6 @@ function renderAll(){
   renderMistakes();
   renderCurve();
   renderCalendar();
-  renderBreakdowns();
   renderLog();
   renderHome();
 }
