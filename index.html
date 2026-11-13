@@ -395,6 +395,17 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
 .slink:hover{color:var(--teal);border-bottom-color:var(--teal)}
 .acctnote .hint{display:flex;align-items:center;min-height:42px;font-size:13.5px}
 .acctpill{display:inline-block;font-size:11.5px;font-weight:700;color:var(--teal2);background:var(--tealsoft);border-radius:999px;padding:2px 8px;margin-top:4px;white-space:nowrap}
+.mtag{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.fixl{font-size:12.5px;font-weight:700;color:var(--teal);text-decoration:none;white-space:nowrap}
+.fixl:hover{text-decoration:underline}
+.repbox{background:var(--tealsoft);border-radius:14px;padding:14px 16px;margin:0 0 14px}
+.repbox p{margin:0 0 8px;font-size:14px;color:var(--teal2)}
+.rml{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 16px}
+.rmi{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:8px 12px;font-size:14px}
+.rmi small{color:var(--mut);font-weight:600}
+.rma{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+@media (max-width:700px){ .rml{grid-template-columns:minmax(0,1fr)} .rmi{flex-direction:column;align-items:flex-start;gap:2px} }
+
 #printReport{display:none}
 @media print{
   @page{ margin:0; }
@@ -1143,6 +1154,31 @@ function renderEdge(){
   ins.innerHTML = msg ? `<span>\u{1F4A1}</span><span>${msg.trim()}</span>` : "";
 }
 
+
+/* ---------------- lessons to fix things ---------------- */
+const LESSON = {
+  a03:["Volume Profile 101","/volume-profile-101.pdf"], a04:["Profile Shapes","/profile-shapes.pdf"], a05:["Why the Setups Work","/why-the-setups-work.pdf"],
+  a06:["VWAP and ATR","/vwap-and-atr.pdf"], a07:["Execution","/execution.pdf"], a09:["The Prop Playbook","/prop-playbook.pdf"],
+  adv:["Advanced Setups","/advanced-setups.pdf"], boom:["The Boom-and-Bust Cycle","/boom-and-bust-cycle.pdf"], common:["Common Mistakes","/common-mistakes.pdf"]
+};
+const MISTAKE_FIX = { "Chased entry":"a07", "Moved stop":"a07", "Early exit":"a07", "Revenge trade":"boom", "Outside A+":"a05", "Oversized":"a09" };
+const REP_NAMES = { dshape:"D-shape Snap", flip:"The Flip", magnet:"The Magnet", hvn:"HVN under the level", poke:"Poke through", fakeMagnet:"Fake Magnet",
+  trend:"Fading a trend day", slice:"The Slice", snapPlain:"Plain Snap", stackedSnap:"Stacked Snap", hvnLevel:"HVN at the level", trendFlip:"Trend Flip",
+  dpocFade:"Fading the dPOC", chase:"Chasing", twoLosses:"Two losses already", reinforced:"Reinforced Flip", sliceFlip:"Slice Flip", dpocNear:"dPOC too close",
+  twoLevels:"Two levels close together", secondSnap:"Second Snap", thirdSnap:"Third Snap", secondFlip:"Second Flip", thirdFlip:"Third Flip",
+  trendMagnet:"Trend Magnet", tripleStack:"Triple stack", noLevel:"No level", wall:"The Wall", wallDpoc:"The Wall at the dPOC",
+  wallRotating:"The Wall on a rotating day", wallNoShelf:"The Wall with no shelf", vwapSnap:"Snap with a VWAP band", pMagnet:"Magnet on a P-shape",
+  whipMid:"Whip in the middle of value", whip:"The Whip", whipP:"Whip on a P-shape", whipTrend:"Whip against the trend" };
+const REP_LESSON = id => /^(wall|whip)/.test(id) ? "adv"
+  : ["chase","twoLosses","dpocNear","secondSnap","thirdSnap","secondFlip","thirdFlip"].includes(id) ? "a07"
+  : ["trend","dpocFade","trendFlip","trendMagnet","pMagnet"].includes(id) ? "a04"
+  : ["vwapSnap","stackedSnap","tripleStack"].includes(id) ? "a06"
+  : ["hvn","poke","slice","noLevel","twoLevels","hvnLevel"].includes(id) ? "a03" : "a05";
+const lessonLink = (k, pre) => LESSON[k] ? `<a class="fixl" href="${LESSON[k][1]}" target="_blank" rel="noopener">${pre||""}${LESSON[k][0]} →</a>` : "";
+function repMisses(){
+  try{ const mm = JSON.parse(localStorage.getItem("maliktrades.sim.miss.v1") || "{}");
+    return Object.keys(mm).filter(k => REP_NAMES[k]).sort((x,y) => (mm[y].miss||0)-(mm[x].miss||0)).map(k => ({ id:k, n:mm[k].miss||1 })); }catch(e){ return []; }
+}
 /* ---------------- mistakes ---------------- */
 function renderMistakes(){
   const list = scoped();
@@ -1157,7 +1193,7 @@ function renderMistakes(){
   const rows = MISTAKES.map(m=>{ const ts = list.filter(t=>(t.mistakes||[]).includes(m)); return {m, n:ts.length, v:sumVal(ts,useR)}; })
     .filter(r=>r.n).sort((a,b)=>a.v-b.v);
   if(!rows.length) html += `<div class="empty-note">No mistakes tagged in this window. Keep it that way.</div>`;
-  rows.forEach(r=>{ html += `<div class="mrow"><span class="tag">${r.m}</span><span class="c">${r.n} trade${r.n===1?"":"s"}</span><b class="num ${cls(r.v)}">${fmtVal(r.v,useR)}</b></div>`; });
+  rows.forEach(r=>{ html += `<div class="mrow"><div class="mtag"><span class="tag">${r.m}</span>${MISTAKE_FIX[r.m] ? lessonLink(MISTAKE_FIX[r.m], "Fix it: ") : ""}</div><span class="c">${r.n} trade${r.n===1?"":"s"}</span><b class="num ${cls(r.v)}">${fmtVal(r.v,useR)}</b></div>`; });
   if(broke.length && bv<0) html += `<div class="ins bad"><span>⚠️</span><span>Without the rule breaks you'd be at <b>${fmtVal(cv,useR)}</b>, not ${fmtVal(cv+bv,useR)}.</span></div>`;
   box.innerHTML = html;
 }
@@ -1779,7 +1815,7 @@ const STUDY = [
   ["a01","Chart Setup"],["a02","Futures Cheat Sheet"],["a03","Volume Profile 101"],["a04","Profile Shapes"],
   ["a05","Why the Setups Work"],["a06","VWAP and ATR"],["a07","Execution"],["a08","Putting It All Together"],
   ["a09","The Prop Playbook"],["core","Core Setups (Playbook)"],["adv","Advanced Setups (Playbook)"],
-  ["boom","The Boom-and-Bust Cycle"],["zone","Trading in the Zone notes"]
+  ["common","Common Mistakes (Playbook)"],["boom","The Boom-and-Bust Cycle"],["zone","Trading in the Zone notes"]
 ];
 const STUDYN = Object.fromEntries(STUDY);
 const SECTIONS = [
@@ -1888,6 +1924,11 @@ function reviewHtml(w){
   <section class="rvs" id="rv05"><div class="card">
     <div class="rvt"><span class="rvn">05</span><h2>${S[4].t}</h2><span class="stchip">To do</span></div>
     <p class="hint" style="margin:-4px 0 14px;font-size:14px">Your three most significant mistakes this week. For each one, write what happened, what caused it, and how you'll prevent it from happening again. Then mark whether it was a strategy misunderstanding or an execution failure, and pick the lesson to revisit.</p>
+    ${(()=>{ const rm = repMisses().slice(0,4); if(!rm.length) return "";
+      const ls = [...new Set(rm.map(x=>REP_LESSON(x.id)))];
+      return `<div class="repbox"><div class="kql">\u{1F3AF} From the Rep Room</div><p>Situations you're still getting wrong. If any of them match your mistakes this week, start with the lesson next to it.</p>
+        <div class="rml">${rm.map(x=>`<div class="rmi"><span><b>${REP_NAMES[x.id]}</b> <small>missed ${x.n}×</small></span>${lessonLink(REP_LESSON(x.id))}</div>`).join("")}</div>
+        <div class="rma"><a class="btn sm" href="/simulator.html" target="_blank" rel="noopener">Review my mistakes in the Rep Room →</a><span class="hint">Suggested to revisit: ${ls.map(k=>LESSON[k][0]).join(", ")}</span></div></div>`; })()}
     ${[0,1,2].map(i=>`<div class="mist">
       <div class="mhead"><span class="mnum">Mistake ${i+1}</span><input type="text" data-p="m.${i}.title" maxlength="90" placeholder="${["e.g. Chased the NQ short at ONVAL","e.g. Took a Snap with no confluence","e.g. Moved my stop on the GC Flip"][i]}" value="${escapeHtml(getPath(rvDraft,`m.${i}.title`)||"")}"></div>
       ${ta(`m.${i}.text`, "What happened, what caused it, and how you'll stop it happening again…", 5)}
