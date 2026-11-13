@@ -391,6 +391,10 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
 @media (max-width:1180px){ .recent{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:600px){ .recent{gap:10px} .rc4 .th{height:96px} .rc4 .ft{flex-direction:column} .jsum .summary{grid-template-columns:1fr 1fr} .jsum .scope,.jsum .seg{width:100%} .jsum .seg button{flex:1;padding:7px 6px} .jst{font-size:22px} .jhero .wkh-act{gap:6px} .jhero .wkh-act .hbtn{font-size:12px;padding:5px 9px;min-height:32px} .jhero .wkh-main h1{font-size:40px} }
 
+.slink{color:inherit;text-decoration:none;border-bottom:1.5px dotted #C9BCA5}
+.slink:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.acctnote .hint{display:flex;align-items:center;min-height:42px;font-size:13.5px}
+.acctpill{display:inline-block;font-size:11.5px;font-weight:700;color:var(--teal2);background:var(--tealsoft);border-radius:999px;padding:2px 8px;margin-top:4px;white-space:nowrap}
 #printReport{display:none}
 @media print{
   @page{ margin:0; }
@@ -674,6 +678,9 @@ section[id^=sec],#logForm{scroll-margin-top:70px}
         <div class="field"><label for="fPnl">P&amp;L (before fees)</label><input type="number" id="fPnl" step="0.01" placeholder="0.00"></div>
         <div class="field"><label for="fFees">Fees</label><input type="number" id="fFees" step="0.01" placeholder="0.00"></div>
         <div class="field half"><span class="lab">Result in R</span><div class="rbox" id="rBox"><b>—</b><span>Add your stop size and P&amp;L to see the result in R.</span></div></div>
+
+        <div class="field half"><label for="fAcct">Prop account</label><select id="fAcct"></select></div>
+        <div class="field half acctnote"><span class="lab">&nbsp;</span><div class="hint" id="acctHint">Pick the account and this trade's P&amp;L shows up in the Prop Tracker, ready to add to that account.</div></div>
 
         <div class="field full"><span class="lab">Confluences at the level · <span id="confCount">0 selected</span></span><div class="cgroups" id="chips"></div></div>
         <div class="field full"><span class="lab">Mistakes · leave empty if you followed the plan</span><div class="chips" id="mistakeChips"></div></div>
@@ -1330,7 +1337,7 @@ function renderLog(){
     html += `<tr>
       <td style="white-space:nowrap">${shortDate(tr.date)}<div class="lv">${tr.date.slice(0,4)}${tr.time?" · "+tr.time:""}</div></td>
       <td><b>${escapeHtml(tr.sym)}</b> <span class="pill ${tr.dir}">${tr.dir==="short"?"Short":"Long"}</span></td>
-      <td><div class="setupname">${tr.setup&&SETUP[tr.setup]?setupLabel(tr.setup):'<span class="flat">—</span>'}</div>${where?`<div class="lv">${escapeHtml(where)}</div>`:""}<div class="gradepill">${starStr(tr.grade)}</div></td>
+      <td><div class="setupname">${tr.setup&&SETUP[tr.setup]?setupLink(tr, setupLabel(tr.setup)):'<span class="flat">—</span>'}</div>${where?`<div class="lv">${escapeHtml(where)}</div>`:""}<div class="gradepill">${starStr(tr.grade)}</div>${acctLabel(tr.acct)?`<span class="acctpill">${escapeHtml(acctLabel(tr.acct))}</span>`:""}</td>
       <td>
         ${(tr.mistakes||[]).length ? `<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">${tr.mistakes.map(m=>`<span class="tag sm">${escapeHtml(m)}</span>`).join("")}</div>`:""}
         ${tr.conf && tr.conf.length ? `<div class="conf">${tr.conf.map(escapeHtml).join(" · ")}</div>`:``}
@@ -1433,6 +1440,7 @@ function readForm(){
     time: $("fTime").value || "",
     session: formSession || null,
     setup: formSetup || null,
+    acct: $("fAcct").value || null,
     level: formLevel || null,
     mistakes: MISTAKES.filter(m=>formMistakes.has(m)),
     sym, dir:side, qty, sl, fees,
@@ -1450,6 +1458,7 @@ function clearForm(keepDate){
   formSession = null; sessManual = false;
   syncChips(); syncSession(); setSide("long");
   formShots = []; renderFormShots();
+  fillAcct();
   $("fDate").value = keepDate ? d : iso(new Date());
   refreshGradeBadge();
 }
@@ -1460,6 +1469,7 @@ function startEdit(id){
   $("fQty").value = t.qty; $("fSl").value = t.sl??"";
   $("fFees").value = t.fees||""; $("fPnl").value = (typeof t.pnl==="number" ? Number((t.pnl + (t.fees||0)).toFixed(2)) : "");
   $("fNotes").value = t.notes||"";
+  fillAcct(t.acct||"");
   activeConfluences = new Set(t.conf||[]);
   formMistakes = new Set(t.mistakes||[]);
   formSetup = t.setup||null; formLevel = t.level||null;
@@ -1484,6 +1494,7 @@ function cancelEdit(){
 function saveTrade(){
   const data = readForm();
   if(data.pnl===null){ toast("Enter the trade's P&L before saving."); $("fPnl").focus(); return; }
+  state.lastAcct = data.acct || "";
   if(editingId){
     const i = state.trades.findIndex(x=>x.id===editingId);
     state.trades[i] = Object.assign({}, state.trades[i], data);
@@ -2242,7 +2253,7 @@ function renderHome(){
     const rv = r!==null ? fmtR(r,2) : money0(p);
     return `<div class="rc4"><div class="th" data-open="${t.id}">${shot?`<img src="${shotCache[shot]}" alt="">`:(su?su.e:"\u{1F4C8}")}<span class="rr ${cls(r!==null?r:p)}">${rv}</span></div>
       <div class="bd"><div class="t1"><b>${escapeHtml(t.sym)}</b><span class="pill ${t.dir}">${t.dir==="short"?"Short":"Long"}</span><span class="gradepill" style="margin-left:auto">${starStr(t.grade)}</span></div>
-        <div class="t2">${su?su.e+" "+su.name:"No setup tagged"}${t.level?` <span class="lv">at ${escapeHtml(t.level)}</span>`:""}</div>
+        <div class="t2">${su?setupLink(t, su.e+" "+su.name):"No setup tagged"}${t.level?` <span class="lv">at ${escapeHtml(t.level)}</span>`:""}</div>
         <div class="t3">${shortDate(t.date)}${t.time?" · "+t.time:""}${t.session?" · "+SESS[t.session]:""}</div>
         <div class="ft"><button class="btn sm" data-card="${t.id}">\u{1F4F8} Card</button><button class="btn sm" data-edit="${t.id}">Edit</button></div></div></div>`;
   }).join("");
@@ -2250,6 +2261,33 @@ function renderHome(){
   $("recent").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(b.dataset.edit));
   $("recent").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{ const t = state.trades.find(x=>x.id===b.dataset.open); const s = t && (t.shots||[]).find(id=>shotCache[id]); if(s) openLightbox(shotCache[s]); else startEdit(b.dataset.open); });
 }
+
+/* ---------------- links to other tools ---------------- */
+const PROPS_KEY = "maliktrades.props.v1";
+function propAccounts(){
+  try{
+    const s = JSON.parse(localStorage.getItem(PROPS_KEY) || "{}");
+    return (Array.isArray(s.accounts) ? s.accounts : []).filter(x=>x && !x.archived && !x.example);
+  }catch(e){ return []; }
+}
+function acctLabel(id){
+  if(!id) return "";
+  if(id==="all") return "All live accounts";
+  const x = propAccounts().find(a=>a.id===id);
+  return x ? x.name : "";
+}
+function fillAcct(val){
+  const accts = propAccounts(), sel = $("fAcct");
+  sel.innerHTML = `<option value="">Not a prop trade / don't track</option>` +
+    accts.map(x=>`<option value="${escapeHtml(x.id)}">${escapeHtml(x.name)}${x.phase==="funded"?" · Funded":" · Evaluation"}</option>`).join("") +
+    (accts.length>1 ? `<option value="all">All my live accounts (copy trading)</option>` : "");
+  sel.disabled = !accts.length;
+  if(!accts.length){ sel.innerHTML = `<option value="">No accounts in your Prop Tracker yet</option>`; $("acctHint").innerHTML = `Add your accounts in the <a href="/MalikTradesPropTracker/" style="color:var(--teal);font-weight:700">Prop Tracker</a> and you can link each trade to one.`; }
+  sel.value = val!=null ? val : (state.lastAcct || "");
+  if(sel.value!==(val!=null?val:(state.lastAcct||""))) sel.value = "";
+}
+function setupHref(t){ return `/setup-library.html?setup=${encodeURIComponent(t.setup)}&inst=${encodeURIComponent(t.sym.replace(/^M(?=NQ|ES|GC|CL)/,""))}&from=journal`; }
+function setupLink(t, inner){ return t.setup && SETUP[t.setup] ? `<a class="slink" href="${setupHref(t)}" target="_blank" rel="noopener" title="See ${SETUP[t.setup].name} examples in the Setup Library">${inner}</a>` : inner; }
 /* ---------------- render ---------------- */
 function lastTradedDay(){ const ds = state.trades.map(t=>t.date).sort(); return ds.length ? ds[ds.length-1] : iso(new Date()); }
 function setScope(mode, opts){
@@ -2340,6 +2378,8 @@ function init(){
   loadImg("banner.jpg").then(im=>{ bannerImg = im; });
   load();
   buildChips();
+  fillAcct();
+  window.addEventListener("focus", ()=>{ if(!editingId) fillAcct($("fAcct").value); });
   $("fDate").value = iso(new Date());
   setSide("long"); syncChips(); syncSession();
   refreshGradeBadge();
@@ -2431,6 +2471,7 @@ function init(){
 
   renderAll();
   if(location.hash === "#week") openWeekly();
+  else if(location.hash === "#log"){ history.replaceState(null, "", location.pathname); setTimeout(()=>{ $("logForm").scrollIntoView({block:"start"}); $("fTime").focus({preventScroll:true}); }, 60); }
 
   shotLoadAll().then(all => {
     shotCache = all;
