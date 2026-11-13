@@ -354,6 +354,43 @@ textarea.lf.big{min-height:230px}
 @media (max-width:1000px){ .wkh-stats{grid-template-columns:repeat(2,minmax(0,1fr))} .wkh-main{flex-direction:column;align-items:flex-start} }
 @media (max-width:600px){ .wkhero{padding:18px 16px 18px;border-radius:18px} .wkh-main h1{font-size:38px} .wkr{min-width:0} .dplot{height:110px} .dval{font-size:13px} .hs .v{font-size:20px} .hs .v.gold{font-size:24px} .hs .s{white-space:normal} }
 
+/* journal home polish */
+.jhero .wkh-main{margin-top:18px}
+.ringbtn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 18px 12px 12px;cursor:pointer;text-align:left;color:#fff;font:inherit}
+.ringbtn:hover{background:rgba(255,255,255,.12)}
+#jhLine b.pos{color:#8FD3A9}#jhLine b.neg{color:#F0A497}
+.jsum{margin-top:24px;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.1);padding-top:18px}
+.jsum .panel-head{margin-bottom:0}
+.jst{color:#fff;font-size:26px}
+.jsum .seg{background:rgba(255,255,255,.08)}
+.jsum .seg button{color:#C3D1CE}
+.jsum .seg button[aria-pressed=true]{background:#E9E2D3;color:var(--teal)}
+.jsum .scope-note{color:#9FB7B2}
+.jsum .hint{color:#9FB7B2}
+.jsum .btn.ghost{color:#C3D1CE}.jsum .btn.ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+.jsum .stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff}
+.jsum .stat .label{color:#9FB7B2}
+.jsum .stat .sub{color:#C3D1CE}
+.jsum .stat .value.pos{color:#8FD3A9}.jsum .stat .value.neg{color:#F0A497}
+.jsum .stat.lead{background:linear-gradient(160deg,rgba(226,194,122,.18),rgba(226,194,122,.06));border:1px solid rgba(226,194,122,.3)}
+.jsum .stat.lead .value,.jsum .stat.lead .value.pos{color:var(--gold2)}
+.recent{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rc4{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px -24px rgba(30,50,55,.4);transition:transform .15s,box-shadow .15s}
+.rc4:hover{transform:translateY(-2px);box-shadow:0 16px 34px -22px rgba(30,50,55,.5)}
+.rc4 .th{height:120px;background:linear-gradient(160deg,#2F5A60,#1A333A);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer}
+.rc4 .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.rc4 .th .rr{position:absolute;right:10px;top:10px;font-weight:800;font-size:14px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.95)}
+.rc4 .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.rc4 .t1{display:flex;align-items:center;gap:8px}
+.rc4 .t1 b{font-size:16px}
+.rc4 .t2{font-weight:700;font-size:14.5px}
+.rc4 .t3{font-size:12.5px;color:var(--mut)}
+.rc4 .ft{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+.rc4 .ft .btn{flex:1;text-align:center}
+section[id^=sec],#logForm{scroll-margin-top:70px}
+@media (max-width:1180px){ .recent{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:600px){ .recent{gap:10px} .rc4 .th{height:96px} .rc4 .ft{flex-direction:column} .jsum .summary{grid-template-columns:1fr 1fr} .jsum .scope,.jsum .seg{width:100%} .jsum .seg button{flex:1;padding:7px 6px} .jst{font-size:22px} .jhero .wkh-act{gap:6px} .jhero .wkh-act .hbtn{font-size:12px;padding:5px 9px;min-height:32px} .jhero .wkh-main h1{font-size:40px} }
+
 #printReport{display:none}
 @media print{
   @page{ margin:0; }
@@ -433,31 +470,25 @@ textarea.lf.big{min-height:230px}
 
 <div id="mainView">
 <div class="wrap">
-  <div class="hd">
-    <div><div class="eyb">Tools</div><h1>Trade Journal</h1><p class="lede">Log every trade, tag the setup and level, and see exactly where your edge is.</p></div>
-    <div class="btns">
-      <button class="btn sm" id="btnCsv">Export CSV</button>
-      <button class="btn sm" id="btnPdf" title="Exports the date window set below">Export PDF</button>
-      <button class="btn sm" id="btnExport">Backup</button>
-      <button class="btn sm" id="btnImport">Restore</button>
-      <input type="file" id="fileImport" accept="application/json" hidden>
-      <button class="btn gold" id="btnWeekly">Weekly review</button>
-      <button class="btn primary" id="btnGoLog">+ Log a trade</button>
+  <div class="wkhero jhero">
+    <div class="wkh-top">
+      <div class="eyb" style="color:var(--gold2)">Tools · Trade journal</div>
+      <div class="wkh-act">
+        <button class="hbtn" id="btnCsv">Export CSV</button>
+        <button class="hbtn" id="btnPdf" title="Exports the date window set below">Export PDF</button>
+        <button class="hbtn" id="btnExport">Backup</button>
+        <button class="hbtn" id="btnImport">Restore</button>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+      </div>
     </div>
-  </div>
-
-  <section id="welcome" hidden>
-    <div class="card welcome">
-      <h3>A trading journal you can keep</h3>
-      <p>Log a trade below and everything here fills in: your results in R, where your edge is by setup, level and session, what your mistakes cost, a P&amp;L calendar and an equity curve.</p>
-      <p>Tick the confluences at your level and the trade rates itself, one star per confluence up to four. Add your stop size and every result is measured in R, so a win on MNQ and a win on GC compare fairly.</p>
-      <p>Your trades are saved in this browser, on this device. They're never uploaded anywhere and nobody else can see them. Clearing your browsing data erases them, so hit <strong>Backup</strong> now and then and keep the file somewhere safe.</p>
+    <div class="wkh-main">
+      <div><h1>Trade Journal</h1><p id="jhLine">Log every trade, tag the setup and level, and see exactly where your edge is.</p>
+        <div class="btns" style="margin-top:16px"><button class="btn gold" id="btnGoLog">+ Log a trade</button><button class="hbtn" id="btnWeekly" style="min-height:42px">🗓️ Weekly review</button></div></div>
+      <button class="ring ringbtn" id="jhRing" type="button" title="Open this week's review"></button>
     </div>
-  </section>
-
-  <section id="summary" aria-label="Performance summary">
+  <div id="summary" class="jsum" aria-label="Performance summary">
     <div class="panel-head" style="margin-bottom:0">
-      <h2 id="scopeTitle">All time</h2>
+      <h2 id="scopeTitle" class="jst">All time</h2>
       <span class="spacer"></span>
       <div class="scope">
         <div class="seg">
@@ -499,7 +530,19 @@ textarea.lf.big{min-height:230px}
       <div class="stat"><div class="label">Expectancy</div><div class="value num" id="sExp">—</div><div class="sub" id="sExpSub"></div></div>
       <div class="stat"><div class="label" id="sDdLabel">Max drawdown</div><div class="value num" id="sDd">—</div><div class="sub" id="sDdSub"></div></div>
     </div>
+  </div>
+  </div>
+  <nav class="wknav" id="jNav" aria-label="Journal sections"></nav>
+  <section id="recentSec" style="margin-top:8px"><div class="panel-head" style="margin-bottom:12px"><h2>Latest trades</h2><span class="spacer"></span><a class="hint" href="#secLog" id="seeAll" style="font-weight:700;color:var(--teal2);text-decoration:none">See the full log →</a></div><div class="recent" id="recent"></div></section>
+  <section id="welcome" hidden>
+    <div class="card welcome">
+      <h3>A trading journal you can keep</h3>
+      <p>Log a trade below and everything here fills in: your results in R, where your edge is by setup, level and session, what your mistakes cost, a P&amp;L calendar and an equity curve.</p>
+      <p>Tick the confluences at your level and the trade rates itself, one star per confluence up to four. Add your stop size and every result is measured in R, so a win on MNQ and a win on GC compare fairly.</p>
+      <p>Your trades are saved in this browser, on this device. They're never uploaded anywhere and nobody else can see them. Clearing your browsing data erases them, so hit <strong>Backup</strong> now and then and keep the file somewhere safe.</p>
+    </div>
   </section>
+
 
   <section>
     <div class="filters">
@@ -526,7 +569,7 @@ textarea.lf.big{min-height:230px}
     </div>
   </section>
 
-  <section>
+  <section id="secEdge">
     <div class="g2">
       <div class="card">
         <div class="panel-head">
@@ -548,7 +591,7 @@ textarea.lf.big{min-height:230px}
     </div>
   </section>
 
-  <section>
+  <section id="secCurve">
     <div class="card">
       <div class="panel-head">
         <h2>Equity curve</h2><span class="spacer"></span>
@@ -568,7 +611,7 @@ textarea.lf.big{min-height:230px}
     </div>
   </section>
 
-  <section>
+  <section id="secCal">
     <div class="card">
       <div class="panel-head">
         <h2>Daily P&amp;L</h2><span class="spacer"></span>
@@ -658,14 +701,14 @@ textarea.lf.big{min-height:230px}
     </div>
   </section>
 
-  <section>
+  <section id="secRatings">
     <div class="card">
       <div class="panel-head"><h2>Do the star ratings hold up?</h2></div>
       <div class="table-scroll"><table class="grades" id="gradeTable"></table></div>
     </div>
   </section>
 
-  <section>
+  <section id="secLog">
     <div class="card">
       <div class="panel-head"><h2>Trade log</h2><span class="spacer"></span><span class="hint" id="logCount"></span></div>
       <div class="table-scroll"><table class="log" id="logTable"></table></div>
@@ -1705,8 +1748,8 @@ function renderWeekly(){
   rvProgress();
 }
 const NAVN = {"01":"Numbers","02":"Execution","03":"Psychology","04":"Missed","05":"Mistakes","06":"Plan"};
-function sectionDone(){
-  const r = rvDraft || {}, has = v => typeof v==="string" && v.trim()!=="";
+function sectionDone(rr){
+  const r = rr || rvDraft || {}, has = v => typeof v==="string" && v.trim()!=="";
   return {
     "01": has(r.k1),
     "02": has(r.s2) && has(r.k2),
@@ -2191,6 +2234,38 @@ function importJson(file){
   fr.readAsText(file);
 }
 
+
+/* ---------------- journal home hero + latest trades ---------------- */
+const JNAV = [["secEdge","Edge"],["secCurve","Equity curve"],["secCal","Calendar"],["logForm","Log a trade"],["secRatings","Ratings"],["secLog","Trade log"]];
+function renderHome(){
+  const today = iso(new Date()), mon = mondayOf(today);
+  const wk = state.trades.filter(t=>t.date>=mon && t.date<=today);
+  const useR = wk.some(t=>tradeR(t)!==null), v = sumVal(wk, useR);
+  const tday = state.trades.filter(t=>t.date===today).length;
+  const line = !state.trades.length ? "Log every trade, tag the setup and level, and see exactly where your edge is."
+    : (wk.length ? `This week: <b class="${cls(v)}">${fmtVal(v,useR)}</b> from ${wk.length} trade${wk.length===1?"":"s"}${tday?` · ${tday} logged today`:""}.` : "No trades logged this week yet.") + ` ${state.trades.length} trade${state.trades.length===1?"":"s"} in your journal.`;
+  $("jhLine").innerHTML = line;
+  const d = sectionDone(state.reviews[mon] || {}), n = Object.values(d).filter(Boolean).length;
+  const R = 26, C = 2*Math.PI*R;
+  $("jhRing").innerHTML = `<svg width="66" height="66" viewBox="0 0 66 66"><circle cx="33" cy="33" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="6"/><circle cx="33" cy="33" r="${R}" fill="none" stroke="#E2C27A" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(C*n/6).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 33 33)"/><text x="33" y="39" text-anchor="middle" fill="#fff" font-size="16" font-weight="700" font-family="Source Sans 3, sans-serif">${n}/6</text></svg><div><b>This week's review</b><span>${n===6?"Done. Post your card.":n?`${6-n} section${6-n===1?"":"s"} to go`:"Not started yet"}</span></div>`;
+  $("jNav").innerHTML = JNAV.map(([id,l],k)=>`<a href="#${id}" data-go="${id}"><i>${k+1}</i>${l}</a>`).join("");
+  $("jNav").querySelectorAll("a").forEach(x=>x.onclick = e => { e.preventDefault(); $(x.dataset.go).scrollIntoView({behavior:"smooth", block:"start"}); });
+  const last = state.trades.slice().sort(byTime).reverse().slice(0,4);
+  $("recentSec").hidden = !state.trades.length;
+  $("recent").innerHTML = last.map(t=>{
+    const r = tradeR(t), p = tradePnl(t), shot = (t.shots||[]).find(id=>shotCache[id]);
+    const su = SETUP[t.setup];
+    const rv = r!==null ? fmtR(r,2) : money0(p);
+    return `<div class="rc4"><div class="th" data-open="${t.id}">${shot?`<img src="${shotCache[shot]}" alt="">`:(su?su.e:"\u{1F4C8}")}<span class="rr ${cls(r!==null?r:p)}">${rv}</span></div>
+      <div class="bd"><div class="t1"><b>${escapeHtml(t.sym)}</b><span class="pill ${t.dir}">${t.dir==="short"?"Short":"Long"}</span><span class="gradepill" style="margin-left:auto">${starStr(t.grade)}</span></div>
+        <div class="t2">${su?su.e+" "+su.name:"No setup tagged"}${t.level?` <span class="lv">at ${escapeHtml(t.level)}</span>`:""}</div>
+        <div class="t3">${shortDate(t.date)}${t.time?" · "+t.time:""}${t.session?" · "+SESS[t.session]:""}</div>
+        <div class="ft"><button class="btn sm" data-card="${t.id}">\u{1F4F8} Card</button><button class="btn sm" data-edit="${t.id}">Edit</button></div></div></div>`;
+  }).join("");
+  $("recent").querySelectorAll("[data-card]").forEach(b=>b.onclick=()=>openCard(b.dataset.card));
+  $("recent").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(b.dataset.edit));
+  $("recent").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{ const t = state.trades.find(x=>x.id===b.dataset.open); const s = t && (t.shots||[]).find(id=>shotCache[id]); if(s) openLightbox(shotCache[s]); else startEdit(b.dataset.open); });
+}
 /* ---------------- render ---------------- */
 function lastTradedDay(){ const ds = state.trades.map(t=>t.date).sort(); return ds.length ? ds[ds.length-1] : iso(new Date()); }
 function setScope(mode, opts){
@@ -2272,6 +2347,7 @@ function renderAll(){
   renderCalendar();
   renderBreakdowns();
   renderLog();
+  renderHome();
 }
 
 /* ---------------- wiring ---------------- */
@@ -2353,6 +2429,8 @@ function init(){
 
   // weekly review
   $("btnWeekly").onclick = () => openWeekly();
+  $("jhRing").onclick = () => openWeekly(mondayOf(iso(new Date())));
+  $("seeAll").onclick = e => { e.preventDefault(); $("secLog").scrollIntoView({behavior:"smooth", block:"start"}); };
   $("wkBack").onclick = closeWeekly;
   $("wkPrev").onclick = () => { wkStart = addDays(wkStart, -7); renderWeekly(); };
   $("wkNext").onclick = () => { wkStart = addDays(wkStart, 7); renderWeekly(); };
@@ -2375,6 +2453,7 @@ function init(){
     shotCache = all;
     pruneShots();
     renderLog();
+    renderHome();
     renderFormShots();
   });
 }
