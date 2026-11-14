@@ -786,7 +786,8 @@ const SETUPS = [
   {id:"magnet", name:"Magnet",   card:"The Magnet", e:"\u{1F9F2}"},
   {id:"anchor", name:"Anchor",   card:"The Anchor", e:"⚓"},
   {id:"wall",   name:"The Wall", card:"The Wall",   e:"\u{1F9F1}"},
-  {id:"whip",   name:"The Whip", card:"The Whip",   e:"⚡"}
+  {id:"whip",   name:"The Whip", card:"The Whip",   e:"⚡"},
+  {id:"guard",  name:"The Guard", card:"The Guard", e:"\u{1F482}"}
 ];
 const SETUP = Object.fromEntries(SETUPS.map(s=>[s.id,s]));
 const CGROUPS = [
@@ -1168,8 +1169,9 @@ const REP_NAMES = { dshape:"D-shape Snap", flip:"The Flip", magnet:"The Magnet",
   twoLevels:"Two levels close together", secondSnap:"Second Snap", thirdSnap:"Third Snap", secondFlip:"Second Flip", thirdFlip:"Third Flip",
   trendMagnet:"Trend Magnet", tripleStack:"Triple stack", noLevel:"No level", wall:"The Wall", wallDpoc:"The Wall at the dPOC",
   wallRotating:"The Wall on a rotating day", wallNoShelf:"The Wall with no shelf", vwapSnap:"Snap with a VWAP band", pMagnet:"Magnet on a P-shape",
-  whipMid:"Whip in the middle of value", whip:"The Whip", whipP:"Whip on a P-shape", whipTrend:"Whip against the trend" };
-const REP_LESSON = id => /^(wall|whip)/.test(id) ? "adv"
+  whipMid:"Whip in the middle of value", whip:"The Whip", whipP:"Whip on a P-shape", whipTrend:"Whip against the trend",
+  guard:"The Guard", guardThird:"Third touch of the dPOC", guardAsia:"The dPOC in Asia" };
+const REP_LESSON = id => /^(wall|whip|guard)/.test(id) ? "adv"
   : ["chase","twoLosses","dpocNear","secondSnap","thirdSnap","secondFlip","thirdFlip"].includes(id) ? "a07"
   : ["trend","dpocFade","trendFlip","trendMagnet","pMagnet"].includes(id) ? "a04"
   : ["vwapSnap","stackedSnap","tripleStack"].includes(id) ? "a06"
