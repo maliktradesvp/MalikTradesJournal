@@ -1170,9 +1170,10 @@ const REP_NAMES = { dshape:"D-shape Snap", flip:"The Flip", magnet:"The Magnet",
   trendMagnet:"Trend Magnet", tripleStack:"Triple stack", noLevel:"No level", wall:"The Wall", wallDpoc:"The Wall at the dPOC",
   wallRotating:"The Wall on a rotating day", wallNoShelf:"The Wall with no shelf", vwapSnap:"Snap with a VWAP band", pMagnet:"Magnet on a P-shape",
   whipMid:"Whip in the middle of value", whip:"The Whip", whipP:"Whip on a P-shape", whipTrend:"Whip against the trend",
-  guard:"The Guard", guardThird:"Third touch of the dPOC", guardAsia:"The dPOC in Asia" };
-const REP_LESSON = id => /^(wall|whip|guard)/.test(id) ? "adv"
-  : ["chase","twoLosses","dpocNear","secondSnap","thirdSnap","secondFlip","thirdFlip"].includes(id) ? "a07"
+  guard:"The Guard", guardThird:"Third touch of the dPOC", guardAsia:"The dPOC in Asia",
+  anchor:"The Anchor", anchorSmall:"Anchor at a small node", anchorNoAccept:"Anchor with no acceptance", guardShort:"The Guard (short)", dpocBlock:"dPOC in the way" };
+const REP_LESSON = id => /^(wall|whip|guard|anchor)/.test(id) ? "adv"
+  : ["chase","twoLosses","dpocNear","dpocBlock","secondSnap","thirdSnap","secondFlip","thirdFlip"].includes(id) ? "a07"
   : ["trend","dpocFade","trendFlip","trendMagnet","pMagnet"].includes(id) ? "a04"
   : ["vwapSnap","stackedSnap","tripleStack"].includes(id) ? "a06"
   : ["hvn","poke","slice","noLevel","twoLevels","hvnLevel"].includes(id) ? "a03" : "a05";
